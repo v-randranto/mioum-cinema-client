@@ -1,10 +1,14 @@
 import axios from 'axios';
 
-const url = 'http://localhost:5000/posts';
+const urlApi =
+  process.env.NODE_ENV === 'production'
+    ? process.env.REACT_APP_API_URL
+    : process.env.REACT_APP_API_URL_DEV;
 
-export const fetchPosts = () => axios.get(url);
-export const createPost = (newPost) => axios.post(url, newPost);
-export const likePost = (id) => axios.patch(`${url}/${id}/likePost`);
-export const updatePost = (id, updatedPost) =>
-  axios.patch(`${url}/${id}`, updatedPost);
-export const deletePost = (id) => axios.delete(`${url}/${id}`);
+const url = `${urlApi}/films`;
+
+export const fetchFilms = () => axios.get(url);
+export const createFilm = (newFilm) => axios.post(url, newFilm);
+export const updateFilm = (id, updatedFilm) =>
+  axios.patch(`${url}/${id}`, updatedFilm);
+export const deleteFilm = (id) => axios.delete(`${url}/${id}`);
