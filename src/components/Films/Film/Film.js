@@ -43,7 +43,7 @@ const Film = ({ film, setCurrentId }) => {
             <Typography variant="body2" color="textSecondary">
               Réalisé      
             {film.directors.length > 0 &&           
-             <> &nbsp;par {displayArrayItems(film.directors)}</>          
+             <>&nbsp;par {displayArrayItems(film.directors)}</>          
             }
             {film.year &&            
             <>&nbsp;en {film.year}</>

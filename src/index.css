@@ -1,4 +1,4 @@
 body {
-    background: url('images/background.jpg') no-repeat;
-    background-size: cover
+    background: url('images/cinema-background.jpg') repeat;
+    background-size: 25%, 25%
 }
