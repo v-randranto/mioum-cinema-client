@@ -26,7 +26,6 @@ export default makeStyles({
   },
   details: {
     display: 'flex',
-    justifyContent: 'space-between',
     margin: '15px',
   },
 

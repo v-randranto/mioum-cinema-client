@@ -37,29 +37,55 @@ const Film = ({ film, setCurrentId }) => {
         >
           {film.title}
         </Typography>
-        <div className={classes.details}>
-          <Typography variant="body2" color="textSecondary" component="h2">
-            Réalisé par {film.director}
+        {(film.directors.length > 0 || film.year) && (
+          <div className={classes.details}>
+            <Typography variant="body2" color="textSecondary">
+              Réalisé
+            </Typography>
+            {film.directors.length > 0 &&
+            <Typography variant="body2" color="textSecondary">
+              &nbsp; par {film.directors.map((director) => `${director},`)}
+            </Typography>
+            }
+            {film.year &&
+            <Typography variant="body2" color="textSecondary">
+            &nbsp; en {film.year}
+            </Typography>
+            }
+          </div>
+        )}
+        {film.actors.length > 0 && (
+          <div className={classes.details}>
+            <Typography variant="body2" color="textSecondary" component="h2">
+              Avec {film.actors.map((actor) => `${actor},`)}
+            </Typography>
+          </div>
+        )}
+        {film.genres.length > 0 && (
+          <div className={classes.details}>
+            <Typography variant="body2" color="textSecondary" component="h2">
+              Genres: {film.genres.map((genre) => `${genre},`)}
+            </Typography>
+          </div>
+        )}
+        {film.summary && (
+          <Typography
+            className={`${classes.summary} ${classes.details} `}
+            variant="body2"
+            color="textSecondary"
+            component="p"
+          >
+            {film.summary}
           </Typography>
-        </div>
-        <div className={classes.details}>
-          <Typography variant="body2" color="textSecondary" component="h2">
-            Avec {film.actors.map((actor) => `${actor},`)}
-          </Typography>
-        </div>
-        <div className={classes.details}>
-          <Typography variant="body2" color="textSecondary" component="h2">
-            Genres: {film.genres.map((genre) => `${genre},`)}
-          </Typography>
-        </div>
-        <Typography
-          className={classes.summary}
-          variant="body2"
-          color="textSecondary"
-          component="p"
-        >
-          {film.summary}
-        </Typography>
+        )}
+
+        {film.score && (
+          <div className={classes.details}>
+            <Typography variant="body2" color="textSecondary" component="h2">
+              Note de {film.score}/10
+            </Typography>
+          </div>
+        )}
       </CardContent>
 
       <CardActions className={classes.cardActions}>

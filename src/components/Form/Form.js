@@ -6,16 +6,20 @@ import FileBase from 'react-file-base64';
 import useStyles from './styles';
 import { createFilm, updateFilm } from '../../actions/films';
 
+const formInit = {
+  year: '',
+  director: '',
+  directors: '',
+  title: '',
+  summary: '',
+  genres: '',
+  actors: '',
+  score: '',
+  selectedFile: '',
+};
+
 const Form = ({ currentId, setCurrentId }) => {
-  const [filmData, setFilmData] = useState({
-    year: '',
-    director: '',
-    title: '',
-    summary: '',
-    genres: '',
-    actors: '',
-    selectedFile: '',
-  });
+  const [filmData, setFilmData] = useState(formInit);
   const film = useSelector((state) =>
     currentId ? state.films.find((summary) => summary._id === currentId) : null
   );
@@ -23,30 +27,57 @@ const Form = ({ currentId, setCurrentId }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    if (film) setFilmData(film);
+    let setData = {}
+    if (film) {
+      const { year, title, summary, selectedFile, score, director } = film;
+       setData = {
+        year, title, summary, selectedFile, score, director, 
+        genres: film.genres.toString(), 
+        directors: film.directors.toString(), 
+        actors: film.actors.toString()                                                                              
+      }
+    }
+    setFilmData(setData);
   }, [film]);
-
+  
   const clear = () => {
     setCurrentId(0);
-    setFilmData({
-      year: '',
-      director: '',
-      genres: '',
-      title: '',
-      summary: '',
-      actors: '',
-      selectedFile: '',
-    });
+    setFilmData(formInit);
   };
+
+  const handleChange = (e) => {
+    const {name, value} = e.target
+    const data = {...filmData}
+    data[name] = value
+    setFilmData(data)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { year, title, summary, selectedFile, score, director } = filmData;
+  
+    let filmSubmit = {
+      year, title, summary, selectedFile, score, director, 
+      genres: [], 
+      directors: [], 
+      actors: []                     
+    }
+
+    if (filmData.directors && filmData.directors.length) {
+      filmSubmit.directors = filmData.directors.split(',')
+    }
+    if (filmData.actors && filmData.actors.length) {
+      filmSubmit.actors = filmData.actors.split(',') 
+    }
+    if (filmData.genres && filmData.genres.length) {
+      filmSubmit.genres = filmData.genres.split(',') 
+    }
 
     if (currentId === 0) {
-      dispatch(createFilm(filmData));
+      dispatch(createFilm(filmSubmit));
       clear();
     } else {
-      dispatch(updateFilm(currentId, filmData));
+      dispatch(updateFilm(currentId, filmSubmit));
       clear();
     }
   };
@@ -63,30 +94,45 @@ const Form = ({ currentId, setCurrentId }) => {
           {currentId ? `Modifier "${film.title}"` : 'Ajouter un film'}
         </Typography>
         <TextField
+          id="titleInput"
           name="title"
           variant="outlined"
           label="Titre"
           fullWidth
+          required
           value={filmData.title}
-          onChange={(e) => setFilmData({ ...filmData, title: e.target.value })}
+          onChange={handleChange}
         />
         <TextField
           name="director"
           variant="outlined"
-          label="Réalisateur"
+          label="Réalisateur - A SUPPRIMER"
           fullWidth
           value={filmData.director}
+          disabled
           onChange={(e) =>
-            setFilmData({ ...filmData, director: e.target.value })
+            setFilmData({ ...filmData, director: e.target.value.trim() })
           }
         />
         <TextField
+          name="directors"
+          variant="outlined"
+          label="Réalisateurs (séparés par une virgule)"
+          fullWidth
+          value={filmData.directors}
+          onChange={(e) =>
+            setFilmData({ ...filmData, directors: e.target.value.trim() })
+          }
+        />
+        <TextField
+          id="yearInput"
+          type="year"
           name="year"
           variant="outlined"
           label="Année"
           fullWidth
           value={filmData.year}
-          onChange={(e) => setFilmData({ ...filmData, year: e.target.value })}
+          onChange={(e) => setFilmData({ ...filmData, year: e.target.value.trim() })}
         />
         <TextField
           name="summary"
@@ -97,7 +143,7 @@ const Form = ({ currentId, setCurrentId }) => {
           rows={4}
           value={filmData.summary}
           onChange={(e) =>
-            setFilmData({ ...filmData, summary: e.target.value })
+            setFilmData({ ...filmData, summary: e.target.value.trim() })
           }
         />
         <TextField
@@ -107,7 +153,7 @@ const Form = ({ currentId, setCurrentId }) => {
           fullWidth
           value={filmData.actors}
           onChange={(e) =>
-            setFilmData({ ...filmData, actors: e.target.value.split(',') })
+            setFilmData({ ...filmData, actors: e.target.value.trim()})
           }
         />
         <TextField
@@ -117,10 +163,29 @@ const Form = ({ currentId, setCurrentId }) => {
           fullWidth
           value={filmData.genres}
           onChange={(e) =>
-            setFilmData({ ...filmData, genres: e.target.value.split(',') })
+            setFilmData({ ...filmData, genres: e.target.value.trim() })
           }
         />
+        <TextField
+          id="scoreInput"
+          type="number"
+          InputProps={{
+            inputProps: {
+              max: 10,
+              min: 0,
+            },
+          }}
+          name="score"
+          variant="outlined"
+          label="Note sur 10"
+          fullWidth
+          value={filmData.score}
+          onChange={(e) => setFilmData({ ...filmData, score: e.target.value.trim() })}
+        />
         <div className={classes.fileInput}>
+          <Typography variant="body1" color="textSecondary">
+            Photo
+          </Typography>
           <FileBase
             type="file"
             multiple={false}
