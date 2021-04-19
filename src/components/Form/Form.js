@@ -5,6 +5,7 @@ import FileBase from 'react-file-base64';
 
 import useStyles from './styles';
 import { createFilm, updateFilm } from '../../actions/films';
+import removeCommaEnding from '../../utils/removeCommaEnding'
 
 const formInit = {
   year: '',
@@ -63,14 +64,14 @@ const Form = ({ currentId, setCurrentId }) => {
       actors: []                     
     }
 
-    if (filmData.directors && filmData.directors.length) {
-      filmSubmit.directors = filmData.directors.split(',')
+    if (filmData.directors && filmData.directors.length) {  
+      filmSubmit.directors = removeCommaEnding(filmData.directors.trim()).split(',')
     }
     if (filmData.actors && filmData.actors.length) {
-      filmSubmit.actors = filmData.actors.split(',') 
+      filmSubmit.actors = removeCommaEnding(filmData.actors.trim()).split(',') 
     }
     if (filmData.genres && filmData.genres.length) {
-      filmSubmit.genres = filmData.genres.split(',') 
+      filmSubmit.genres = removeCommaEnding(filmData.genres.trim()).split(',') 
     }
 
     if (currentId === 0) {
@@ -110,9 +111,7 @@ const Form = ({ currentId, setCurrentId }) => {
           fullWidth
           value={filmData.director}
           disabled
-          onChange={(e) =>
-            setFilmData({ ...filmData, director: e.target.value.trim() })
-          }
+          onChange={handleChange}
         />
         <TextField
           name="directors"
@@ -121,7 +120,7 @@ const Form = ({ currentId, setCurrentId }) => {
           fullWidth
           value={filmData.directors}
           onChange={(e) =>
-            setFilmData({ ...filmData, directors: e.target.value.trim() })
+            setFilmData({ ...filmData, directors: e.target.value })
           }
         />
         <TextField
@@ -132,7 +131,7 @@ const Form = ({ currentId, setCurrentId }) => {
           label="Année"
           fullWidth
           value={filmData.year}
-          onChange={(e) => setFilmData({ ...filmData, year: e.target.value.trim() })}
+          onChange={handleChange}
         />
         <TextField
           name="summary"
@@ -142,9 +141,7 @@ const Form = ({ currentId, setCurrentId }) => {
           multiline
           rows={4}
           value={filmData.summary}
-          onChange={(e) =>
-            setFilmData({ ...filmData, summary: e.target.value.trim() })
-          }
+          onChange={handleChange}
         />
         <TextField
           name="actors"
@@ -152,9 +149,7 @@ const Form = ({ currentId, setCurrentId }) => {
           label="Acteurs (séparés par une virgule)"
           fullWidth
           value={filmData.actors}
-          onChange={(e) =>
-            setFilmData({ ...filmData, actors: e.target.value.trim()})
-          }
+          onChange={handleChange}
         />
         <TextField
           name="genres"
@@ -162,9 +157,7 @@ const Form = ({ currentId, setCurrentId }) => {
           label="Genres (séparés par une virgule)"
           fullWidth
           value={filmData.genres}
-          onChange={(e) =>
-            setFilmData({ ...filmData, genres: e.target.value.trim() })
-          }
+          onChange={handleChange}
         />
         <TextField
           id="scoreInput"
@@ -180,7 +173,7 @@ const Form = ({ currentId, setCurrentId }) => {
           label="Note sur 10"
           fullWidth
           value={filmData.score}
-          onChange={(e) => setFilmData({ ...filmData, score: e.target.value.trim() })}
+          onChange={handleChange}
         />
         <div className={classes.fileInput}>
           <Typography variant="body1" color="textSecondary">

@@ -25,7 +25,6 @@ export default makeStyles({
     display: 'flex',
   },
   details: {
-    display: 'flex',
     margin: '15px',
   },
 

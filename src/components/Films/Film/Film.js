@@ -11,6 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import UpdateIcon from '@material-ui/icons/Create';
 import { useDispatch } from 'react-redux';
 import { deleteFilm } from '../../../actions/films';
+import displayArrayItems from '../../../utils/displayArrayItems'
 import useStyles from './styles';
 
 const Film = ({ film, setCurrentId }) => {
@@ -40,31 +41,28 @@ const Film = ({ film, setCurrentId }) => {
         {(film.directors.length > 0 || film.year) && (
           <div className={classes.details}>
             <Typography variant="body2" color="textSecondary">
-              Réalisé
-            </Typography>
-            {film.directors.length > 0 &&
-            <Typography variant="body2" color="textSecondary">
-              &nbsp; par {film.directors.map((director) => `${director},`)}
-            </Typography>
+              Réalisé      
+            {film.directors.length > 0 &&           
+             <> &nbsp;par {displayArrayItems(film.directors)}</>          
             }
-            {film.year &&
-            <Typography variant="body2" color="textSecondary">
-            &nbsp; en {film.year}
+            {film.year &&            
+            <>&nbsp;en {film.year}</>
+            }.
             </Typography>
-            }
+            
           </div>
         )}
         {film.actors.length > 0 && (
           <div className={classes.details}>
             <Typography variant="body2" color="textSecondary" component="h2">
-              Avec {film.actors.map((actor) => `${actor},`)}
+              Avec {displayArrayItems(film.actors)}.
             </Typography>
           </div>
         )}
         {film.genres.length > 0 && (
           <div className={classes.details}>
             <Typography variant="body2" color="textSecondary" component="h2">
-              Genres: {film.genres.map((genre) => `${genre},`)}
+              Genres: {displayArrayItems(film.genres)}.
             </Typography>
           </div>
         )}
