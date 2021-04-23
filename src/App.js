@@ -14,7 +14,8 @@ import './index.css'
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#0d47a1',
+      // main: '#D13438',
+      main: '#881798',
     },
     secondary: {
       main: '#ffe082',

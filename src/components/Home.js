@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '25%',
-    
+    width: '28%',
+    marginLeft: '33%',
   },
   paper: {
     backgroundColor: brown[100],
@@ -46,34 +46,39 @@ export default function Home() {
     setOpen(false);
   };
 
-
   return (
     <>
       <CssBaseline />
-      
+
       <main>
-        <Presentation handleOpen={handleOpen} setSortCriterion={setSortCriterion}/>
+        <Presentation
+          handleOpen={handleOpen}
+          setSortCriterion={setSortCriterion}
+        />
         <Paper className={classes.paper}>
-        <Container maxWidth="xl">
-          <Grid
-            container
-            direction="row"
-            justify-content="space-between"
-            align-items="flex-start"
-            align-content="flex-start"
-            style={{ padding: '20px 0' }}
-          >
-            <Grid item>
-              <Films setCurrentId={setCurrentId} open={open} handleOpen={handleOpen} sortCriterion={sortCriterion}/>
+          <Container maxWidth="xl">
+            <Grid
+              container
+              direction="row"
+              justify-content="space-between"
+              align-items="flex-start"
+              align-content="flex-start"
+              style={{ padding: '20px 0' }}
+            >
+              <Grid item>
+                <Films
+                  setCurrentId={setCurrentId}
+                  open={open}
+                  handleOpen={handleOpen}
+                  sortCriterion={sortCriterion}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </Container>
+          </Container>
         </Paper>
       </main>
 
       <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
         className={classes.modal}
         open={open}
         onClose={handleClose}
@@ -84,11 +89,13 @@ export default function Home() {
         }}
       >
         <Fade in={open}>
-        <Form currentId={currentId} setCurrentId={setCurrentId} handleClose={handleClose} />
+          <Form
+            currentId={currentId}
+            setCurrentId={setCurrentId}
+            handleClose={handleClose}
+          />
         </Fade>
       </Modal>
-    
     </>
-    
   );
 }

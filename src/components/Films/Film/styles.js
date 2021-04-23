@@ -23,14 +23,20 @@ export default makeStyles({
   },
   cardHeader: {
     backgroundColor: blueGrey[300],
-    color: 'white',    
+    color: 'white',
   },
   cardContent: {
-    backgroundColor: blueGrey[50],   
+    backgroundColor: '#FAFAFA',
+  },
+  cardActions: {
+    padding: '0 16px 8px 16px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    backgroundColor: '#FAFAFA',
   },
   paper: {
     backgroundColor: brown[100],
-    height: '80%'
+    height: '80%',
   },
   grid: {
     display: 'flex',
@@ -52,12 +58,5 @@ export default makeStyles({
   },
   backHomeBtn: {
     marginBottom: '20px',
-  },
-  
-  cardActions: {
-    padding: '0 16px 8px 16px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    backgroundColor: blueGrey[50], 
   },
 });

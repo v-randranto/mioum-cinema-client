@@ -4,11 +4,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MovieIcon from '@material-ui/icons/Movie';
-import { grey } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
   appBar: { 
-      backgroundColor: grey[800],
+      // backgroundColor: '#34465d',
+      // backgroundColor: "#647C64",
+      backgroundColor: "#34465d",
+      //backgroundColor: '#a20025',
       color: 'white'
   },
   icon: {

@@ -17,6 +17,7 @@ const formInit = {
   genres: '',
   actors: '',
   score: '',
+  scoreComposer: '',
   selectedFile: '',
 };
 
@@ -26,13 +27,22 @@ const Form = ({ film }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    const { year, title, summary, selectedFile, score, originalTitle } = film;
+    const {
+      year,
+      title,
+      summary,
+      selectedFile,
+      score,
+      scoreComposer,
+      originalTitle,
+    } = film;
     const setData = {
       year,
       title,
       summary,
       selectedFile,
       score,
+      scoreComposer,
       originalTitle,
       genres: film.genres.toString(),
       directors: film.directors.toString(),
@@ -43,13 +53,22 @@ const Form = ({ film }) => {
   }, [film]);
 
   const reset = () => {
-    const { year, title, summary, selectedFile, score, originalTitle } = film;
+    const {
+      year,
+      title,
+      summary,
+      selectedFile,
+      score,
+      scoreComposer,
+      originalTitle,
+    } = film;
     const setData = {
       year,
       title,
       summary,
       selectedFile,
       score,
+      scoreComposer,
       originalTitle,
       genres: film.genres.toString(),
       directors: film.directors.toString(),
@@ -73,6 +92,7 @@ const Form = ({ film }) => {
       summary,
       selectedFile,
       score,
+      scoreComposer,
       originalTitle,
     } = filmData;
 
@@ -82,6 +102,7 @@ const Form = ({ film }) => {
       summary,
       selectedFile,
       score,
+      scoreComposer,
       originalTitle,
       genres: [],
       directors: [],
@@ -110,7 +131,7 @@ const Form = ({ film }) => {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">Modifier "{film.title}"</Typography>
+        <Typography variant="h6">Modifier</Typography>
         <TextField
           id="titleInput"
           name="title"
@@ -171,6 +192,15 @@ const Form = ({ film }) => {
           fullWidth
           size="small"
           value={filmData.actors}
+          onChange={handleChange}
+        />
+        <TextField
+          name="scoreComposer"
+          variant="outlined"
+          label="Compositeur de la musique"
+          fullWidth
+          size="small"
+          value={filmData.scoreComposer}
           onChange={handleChange}
         />
         <TextField

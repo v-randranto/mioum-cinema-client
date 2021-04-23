@@ -6,6 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core/styles';
 import displayArrayItems from '../../../utils/displayArrayItems';
 import defaultImage from '../../../images/default_picture.jfif';
@@ -36,7 +37,7 @@ const Film = ({ film, setCurrentId, open, handleOpen }) => {
     history.push(`/film-card/${film._id}`);
   };
   const handleUpdate = () => {
-    handleOpen()
+    handleOpen();
     setCurrentId(film._id);
   };
   return (
@@ -57,6 +58,17 @@ const Film = ({ film, setCurrentId, open, handleOpen }) => {
             )}
             {film.year && <>&nbsp;{film.year}</>}
           </Typography>
+        )}
+        {film.score && (
+          <div style={{textAlign: "center", marginTop: "5px"}}>
+            <Rating
+              name="read-only"
+              value={film.score}
+              size="small"
+              readOnly
+              precision={0.5}
+            />
+          </div>
         )}
         <CardActions>
           <Button size="small" color="primary" onClick={handleView}>

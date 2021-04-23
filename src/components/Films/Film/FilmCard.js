@@ -26,7 +26,6 @@ import Presentation from './Presentation';
 import defaultImage from '../../../images/default_picture.jfif';
 
 const FilmCard = () => {
-  
   const { id } = useParams();
   const history = useHistory();
   const film = useSelector((state) =>
@@ -76,7 +75,7 @@ const FilmCard = () => {
                         component="h2"
                       >
                         {film.directors.length > 0 && (
-                          <>&nbsp;Par {displayArrayItems(film.directors)}</>
+                          <>&nbsp;De {displayArrayItems(film.directors)}</>
                         )}
                         {film.directors.length > 0 && film.year && (
                           <>&nbsp;en {film.year}</>
@@ -91,6 +90,13 @@ const FilmCard = () => {
                     <div className={classes.details}>
                       <Typography paragraph>
                         Avec {displayArrayItems(film.actors)}.
+                      </Typography>
+                    </div>
+                  )}
+                  {film.scoreComposer && (
+                    <div className={classes.details}>
+                      <Typography paragraph>
+                        Musique de {film.scoreComposer}
                       </Typography>
                     </div>
                   )}
@@ -110,12 +116,15 @@ const FilmCard = () => {
                     </Typography>
                   )}
                   {film.score && (
+                    <div style={{textAlign: "center"}}>
                     <Rating
                       name="read-only"
                       value={film.score}
                       readOnly
                       precision={0.5}
+                      
                     />
+                    </div> 
                   )}
                 </CardContent>
                 <CardActions className={classes.cardActions}>

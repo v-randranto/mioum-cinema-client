@@ -17,6 +17,7 @@ const formInit = {
   genres: '',
   actors: '',
   score: '',
+  scoreComposer: '',
   selectedFile: '',
 };
 
@@ -31,13 +32,22 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
   useEffect(() => {
     let setData = {};
     if (film) {
-      const { year, title, summary, selectedFile, score, originalTitle } = film;
+      const {
+        year,
+        title,
+        summary,
+        selectedFile,
+        score,
+        scoreComposer,
+        originalTitle,
+      } = film;
       setData = {
         year,
         title,
         summary,
         selectedFile,
         score,
+        scoreComposer,
         originalTitle,
         genres: film.genres.toString(),
         directors: film.directors.toString(),
@@ -67,6 +77,7 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
       summary,
       selectedFile,
       score,
+      scoreComposer,
       originalTitle,
     } = filmData;
 
@@ -76,6 +87,7 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
       summary,
       selectedFile,
       score,
+      scoreComposer,
       originalTitle,
       genres: [],
       directors: [],
@@ -96,10 +108,10 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
 
     if (currentId === 0) {
       dispatch(createFilm(filmSubmit));
-      clear()
+      clear();
     } else {
       dispatch(updateFilm(currentId, filmSubmit));
-      handleClose()
+      handleClose();
     }
   };
 
@@ -112,12 +124,12 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
         onSubmit={handleSubmit}
       >
         <Typography variant="h6">
-          {currentId ? `Modifier "${film.title}"` : 'Ajouter un film'}
+          {currentId ? `Modifier` : 'Ajouter'}
         </Typography>
         <TextField
           InputProps={{
-        className: classes.input
-      }}
+            className: classes.input,
+          }}
           id="titleInput"
           name="title"
           variant="outlined"
@@ -176,6 +188,15 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
           fullWidth
           size="small"
           value={filmData.actors}
+          onChange={handleChange}
+        />
+        <TextField
+          name="scoreComposer"
+          variant="outlined"
+          label="Compositeur de la musique"
+          fullWidth
+          size="small"
+          value={filmData.scoreComposer}
           onChange={handleChange}
         />
         <TextField
