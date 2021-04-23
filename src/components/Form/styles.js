@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { blueGrey } from '@material-ui/core/colors';
 
 export default makeStyles((theme) => ({
   root: {
@@ -8,6 +9,7 @@ export default makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
+    backgroundColor: blueGrey[50], 
   },
   form: {
     display: 'flex',

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import FileBase from 'react-file-base64';
 
 import useStyles from './styles';
-import { createFilm, updateFilm } from '../../actions/films';
+import { updateFilm } from '../../actions/films';
 import removeCommaEnding from '../../utils/removeCommaEnding';
 
 const formInit = {
   year: '',
-  originalTitle: '',
   directors: '',
   title: '',
+  originalTitle: '',
   summary: '',
   genres: '',
   actors: '',
@@ -20,36 +20,42 @@ const formInit = {
   selectedFile: '',
 };
 
-const Form = ({ currentId, setCurrentId, handleClose }) => {
+const Form = ({ film }) => {
   const [filmData, setFilmData] = useState(formInit);
-  const film = useSelector((state) =>
-    currentId ? state.films.find((summary) => summary._id === currentId) : null
-  );
   const dispatch = useDispatch();
   const classes = useStyles();
 
   useEffect(() => {
-    let setData = {};
-    if (film) {
-      const { year, title, summary, selectedFile, score, originalTitle } = film;
-      setData = {
-        year,
-        title,
-        summary,
-        selectedFile,
-        score,
-        originalTitle,
-        genres: film.genres.toString(),
-        directors: film.directors.toString(),
-        actors: film.actors.toString(),
-      };
-    }
+    const { year, title, summary, selectedFile, score, originalTitle } = film;
+    const setData = {
+      year,
+      title,
+      summary,
+      selectedFile,
+      score,
+      originalTitle,
+      genres: film.genres.toString(),
+      directors: film.directors.toString(),
+      actors: film.actors.toString(),
+    };
+
     setFilmData(setData);
   }, [film]);
 
-  const clear = () => {
-    setCurrentId(0);
-    setFilmData(formInit);
+  const reset = () => {
+    const { year, title, summary, selectedFile, score, originalTitle } = film;
+    const setData = {
+      year,
+      title,
+      summary,
+      selectedFile,
+      score,
+      originalTitle,
+      genres: film.genres.toString(),
+      directors: film.directors.toString(),
+      actors: film.actors.toString(),
+    };
+    setFilmData(setData);
   };
 
   const handleChange = (e) => {
@@ -93,14 +99,7 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
     if (filmData.genres && filmData.genres.length) {
       filmSubmit.genres = removeCommaEnding(filmData.genres.trim()).split(',');
     }
-
-    if (currentId === 0) {
-      dispatch(createFilm(filmSubmit));
-      handleClose()
-    } else {
-      dispatch(updateFilm(currentId, filmSubmit));
-      handleClose()
-    }
+    dispatch(updateFilm(film._id, filmSubmit));
   };
 
   return (
@@ -111,13 +110,8 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">
-          {currentId ? `Modifier "${film.title}"` : 'Ajouter un film'}
-        </Typography>
+        <Typography variant="h6">Modifier "{film.title}"</Typography>
         <TextField
-          InputProps={{
-        className: classes.input
-      }}
           id="titleInput"
           name="title"
           variant="outlined"
@@ -133,8 +127,8 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
           variant="outlined"
           label="Titre original"
           fullWidth
-          value={filmData.originalTitle}
           size="small"
+          value={filmData.originalTitle}
           onChange={handleChange}
         />
         <TextField
@@ -142,8 +136,8 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
           variant="outlined"
           label="Réalisateurs (séparés par une virgule)"
           fullWidth
-          value={filmData.directors}
           size="small"
+          value={filmData.directors}
           onChange={(e) =>
             setFilmData({ ...filmData, directors: e.target.value })
           }
@@ -155,6 +149,7 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
           variant="outlined"
           label="Année"
           fullWidth
+          size="small"
           value={filmData.year}
           onChange={handleChange}
         />
@@ -188,12 +183,12 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
           onChange={handleChange}
         />
         <Rating
-          name="score"
-          value={+filmData.score}
+          name="simple-controlled"
+          value={filmData.score}
           precision={0.5}
           onChange={(event, newValue) => {
             const data = { ...filmData };
-            data.score = +newValue;
+            data.score = newValue;
             setFilmData(data);
           }}
         />
@@ -223,10 +218,10 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
           variant="contained"
           color="secondary"
           size="small"
-          onClick={clear}
+          onClick={reset}
           fullWidth
         >
-          Effacer
+          Réinitialiser
         </Button>
       </form>
     </Paper>

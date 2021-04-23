@@ -26,6 +26,7 @@ export const createFilm = (film) => async (dispatch) => {
 };
 
 export const updateFilm = (id, film) => async (dispatch) => {
+  console.log(film)
   try {
     const { data } = await api.updateFilm(id, film);
     dispatch({ type: UPDATE, payload: data });

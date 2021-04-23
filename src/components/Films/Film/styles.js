@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { blueGrey, brown } from '@material-ui/core/colors';
 
 export default makeStyles({
   media: {
@@ -16,27 +17,47 @@ export default makeStyles({
   card: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
     borderRadius: '15px',
-    height: '100%',
+    maxHeight: '100%',
     position: 'relative',
+  },
+  cardHeader: {
+    backgroundColor: blueGrey[300],
+    color: 'white',    
+  },
+  cardContent: {
+    backgroundColor: blueGrey[50],   
+  },
+  paper: {
+    backgroundColor: brown[100],
+    height: '80%'
   },
   grid: {
     display: 'flex',
   },
   details: {
-    margin: '15px',
+    margin: '12px',
   },
-
+  details2: {
+    margin: '7px',
+  },
   summary: {
     fontStyle: 'italic',
   },
   title: {
-    padding: '0 16px',
+    padding: '0 14px',
   },
+  title2: {
+    padding: '0 7px',
+  },
+  backHomeBtn: {
+    marginBottom: '20px',
+  },
+  
   cardActions: {
     padding: '0 16px 8px 16px',
     display: 'flex',
     justifyContent: 'space-between',
+    backgroundColor: blueGrey[50], 
   },
 });

@@ -1,28 +1,25 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
-import Film from './Film/Film';
-import useStyles from './styles';
+import Grid from '@material-ui/core/Grid';
 
-const Films = ({ setCurrentId }) => {
+import Film from './film/Film';
+import useSortFilms from './useSortFilms'
+
+const Films = ({ setCurrentId, open, handleOpen, sortCriterion }) => {
   const films = useSelector((state) => state.films);
-  const classes = useStyles();
+  useSortFilms(sortCriterion, films)
 
-  return !films.length ? (
-    <Typography className={classes.heading} variant="h5">
-      Pas encore de films...
-    </Typography>
-  ) : (
-    <Grid
-      className={classes.container}
-      container
-      alignItems="stretch"
-      spacing={3}
-    >
+  return (
+    <Grid container spacing={8}>
       {films.map((film) => (
-        <Grid key={film._id} item xs={12} sm={6} md={6}>
-          <Film film={film} setCurrentId={setCurrentId} />
+        <Grid item key={film._id} xs={12} md={2}>
+          <Film
+            film={film}
+            setCurrentId={setCurrentId}
+            open={open}
+            handleOpen={handleOpen}
+          />
         </Grid>
       ))}
     </Grid>
