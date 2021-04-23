@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
   const classes = useStyles();
   return (
-    <AppBar position="relative" className={classes.appBar} >
+    <AppBar position="sticky" className={classes.appBar} >
       <Toolbar className={classes.root} variant="dense">
         <MovieIcon className={classes.icon} />
         <Typography variant="h6" noWrap>

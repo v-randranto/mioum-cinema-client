@@ -96,7 +96,7 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
 
     if (currentId === 0) {
       dispatch(createFilm(filmSubmit));
-      handleClose()
+      clear()
     } else {
       dispatch(updateFilm(currentId, filmSubmit));
       handleClose()

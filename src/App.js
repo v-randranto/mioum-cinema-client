@@ -5,6 +5,11 @@ import Home from './components/Home';
 import FilmCard from './components/films/film/FilmCard';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
+import ScrollTop from './components/layout/ScrollTop'
+import Fab from '@material-ui/core/Fab';
+import Toolbar from '@material-ui/core/Toolbar';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import './index.css'
 
 const theme = createMuiTheme({
   palette: {
@@ -17,22 +22,30 @@ const theme = createMuiTheme({
   },
 });
 
-const App = () => {
+const App = (props) => {
+  
   return (
     <Router>
-    <ThemeProvider theme={theme}>
-      <Header />
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/film-card/:id">
-          <FilmCard />
-        </Route>
-      </Switch>
+      <ThemeProvider theme={theme}>
+        <Header />
+        <Toolbar id="back-to-top-anchor" />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/home">
+            <Home />
+          </Route>
+          <Route exact path="/film-card/:id">
+            <FilmCard />
+          </Route>
+        </Switch>
+
+        <ScrollTop {...props}>
+          <Fab color="secondary" size="small">
+            <KeyboardArrowUpIcon />
+          </Fab>
+        </ScrollTop>
       </ThemeProvider>
     </Router>
   );
