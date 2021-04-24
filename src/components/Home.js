@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Home() {
+  const films = useSelector((state) => state.films);
   const [currentId, setCurrentId] = useState(0);
   const [sortCriterion, setSortCriterion] = useState(0);
   const [open, setOpen] = useState(false);
@@ -43,7 +44,8 @@ export default function Home() {
     setOpen(true);
   };
   const handleClose = () => {
-    setOpen(false);
+    
+    setOpen(false);    
   };
 
   return (
@@ -54,6 +56,7 @@ export default function Home() {
         <Presentation
           handleOpen={handleOpen}
           setSortCriterion={setSortCriterion}
+          nbFilms={films.length}
         />
         <Paper className={classes.paper}>
           <Container maxWidth="xl">

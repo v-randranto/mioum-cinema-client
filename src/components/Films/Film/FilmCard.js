@@ -75,7 +75,7 @@ const FilmCard = () => {
                         component="h2"
                       >
                         {film.directors.length > 0 && (
-                          <>&nbsp;De {displayArrayItems(film.directors)}</>
+                          <>{displayArrayItems(film.directors)}</>
                         )}
                         {film.directors.length > 0 && film.year && (
                           <>&nbsp;en {film.year}</>
@@ -119,10 +119,9 @@ const FilmCard = () => {
                     <div style={{textAlign: "center"}}>
                     <Rating
                       name="read-only"
-                      value={film.score}
+                      value={+film.score}
                       readOnly
                       precision={0.5}
-                      
                     />
                     </div> 
                   )}

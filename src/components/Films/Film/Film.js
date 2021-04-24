@@ -13,11 +13,11 @@ import defaultImage from '../../../images/default_picture.jfif';
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
   },
   card: {
-    height: '100%',
+    maxHeight: '100%',
     display: 'flex',
     flexDirection: 'column',
   },
@@ -26,7 +26,29 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContent: {
     flexGrow: 1,
+    padding: "10px",
+    paddingBottom: 0,
+    '&:last-child':{
+      paddingBottom: 0
+    },
+    '&:hover':{
+      cursor: 'pointer',
+      pointerEvents: 'auto',
+    }
   },
+  cardActions: {
+    padding: '0 8px 8px 8px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    fontSize: "0.8rem",
+  },
+  detailTitle:{
+    fontSize: "0.8rem",
+    fontWeight: "bold"
+  },
+  detailDirector:{
+    fontSize: "0.8rem"
+  }
 }));
 
 const Film = ({ film, setCurrentId, open, handleOpen }) => {
@@ -46,13 +68,14 @@ const Film = ({ film, setCurrentId, open, handleOpen }) => {
         className={classes.cardMedia}
         image={film.selectedFile || defaultImage}
         title="Photo du film"
+        onClick={handleView}
       />
       <CardContent className={classes.cardContent}>
-        <Typography variant="subtitle1" gutterBottom>
+        <Typography className={classes.detailTitle}>
           {film.title}
         </Typography>
         {(film.directors.length > 0 || film.year) && (
-          <Typography variant="subtitle2">
+          <Typography className={classes.detailDirector}>
             {film.directors.length > 0 && (
               <>{displayArrayItems(film.directors)}</>
             )}
@@ -63,18 +86,18 @@ const Film = ({ film, setCurrentId, open, handleOpen }) => {
           <div style={{textAlign: "center", marginTop: "5px"}}>
             <Rating
               name="read-only"
-              value={film.score}
+              value={+film.score}
               size="small"
               readOnly
               precision={0.5}
             />
           </div>
         )}
-        <CardActions>
-          <Button size="small" color="primary" onClick={handleView}>
+        <CardActions className={classes.cardActions}>
+          <Button style={{fontSize:"0.7rem", paddingBottom:0}} color="primary" onClick={handleView}>
             Voir
           </Button>
-          <Button size="small" color="primary" onClick={handleUpdate}>
+          <Button style={{fontSize:"0.7rem", paddingBottom:0}}  color="primary" onClick={handleUpdate}>
             Modifier
           </Button>
         </CardActions>

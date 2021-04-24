@@ -20,6 +20,7 @@ export default makeStyles({
     borderRadius: '15px',
     maxHeight: '100%',
     position: 'relative',
+    
   },
   cardHeader: {
     backgroundColor: blueGrey[300],
@@ -27,9 +28,10 @@ export default makeStyles({
   },
   cardContent: {
     backgroundColor: '#FAFAFA',
+    paddingBottom: 0,
   },
   cardActions: {
-    padding: '0 16px 8px 16px',
+    padding: '0 8px 8px 16px',
     display: 'flex',
     justifyContent: 'space-between',
     backgroundColor: '#FAFAFA',
@@ -52,6 +54,7 @@ export default makeStyles({
   },
   title: {
     padding: '0 14px',
+    justifyContent: "center"
   },
   title2: {
     padding: '0 7px',

@@ -8,18 +8,19 @@ import Container from '@material-ui/core/Container';
 const useStyles = makeStyles((theme) => ({
   heroContent: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(2, 0, 2),
+    padding: theme.spacing(2, 0, 3),
   },
   heroButtons: {
     marginTop: theme.spacing(2),
   },
 }));
 
-const Presentation = ({ handleOpen, setSortCriterion }) => {
+const Presentation = ({ handleOpen, setSortCriterion, nbFilms }) => {
   const classes = useStyles();
   const [titleSortToggle, setTitleSortToggle] = useState(false);
   const [directorSortToggle, setDirectorSortToggle] = useState(false);
   const [yearSortToggle, setYearSortToggle] = useState(false);
+  const nbFilmsText = nbFilms ? `(${nbFilms})` : ""
 
   const handleSortTitle = () => {
     if (titleSortToggle) {
@@ -57,7 +58,7 @@ const Presentation = ({ handleOpen, setSortCriterion }) => {
     <div className={classes.heroContent}>
       <Container maxWidth="md">
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
-          Ma petite collection de films
+          Ma petite collection de films {nbFilmsText}
         </Typography>
         <div className={classes.heroButtons}>
           <Grid container spacing={2} justify="center">

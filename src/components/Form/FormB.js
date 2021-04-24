@@ -214,7 +214,7 @@ const Form = ({ film }) => {
         />
         <Rating
           name="simple-controlled"
-          value={filmData.score}
+          value={+filmData.score}
           precision={0.5}
           onChange={(event, newValue) => {
             const data = { ...filmData };

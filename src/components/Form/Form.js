@@ -111,6 +111,7 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
       clear();
     } else {
       dispatch(updateFilm(currentId, filmSubmit));
+      setCurrentId(0)
       handleClose();
     }
   };
