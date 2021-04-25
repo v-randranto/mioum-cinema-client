@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '25%'
+        width: '35%'
     },
     paper: {
         backgroundColor: theme.palette.background.paper,

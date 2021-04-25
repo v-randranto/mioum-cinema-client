@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
+import { withStyles } from '@material-ui/core/styles';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
+import { grey } from '@material-ui/core/colors';
 import { useDispatch } from 'react-redux';
 import FileBase from 'react-file-base64';
 
@@ -8,16 +13,28 @@ import useStyles from './styles';
 import { updateFilm } from '../../actions/films';
 import removeCommaEnding from '../../utils/removeCommaEnding';
 
+const GreyCheckbox = withStyles({
+  root: {
+    color: '#2980b9',
+    '&$checked': {
+      color: '#2980b9',
+    },
+  },
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
+
 const formInit = {
   year: '',
+  originalTitle: '',
   directors: '',
   title: '',
-  originalTitle: '',
   summary: '',
   genres: '',
   actors: '',
   score: '',
   scoreComposer: '',
+  seen: false,
+  country: '',
   selectedFile: '',
 };
 
@@ -35,6 +52,8 @@ const Form = ({ film }) => {
       score,
       scoreComposer,
       originalTitle,
+      seen,
+      country,
     } = film;
     const setData = {
       year,
@@ -44,6 +63,8 @@ const Form = ({ film }) => {
       score,
       scoreComposer,
       originalTitle,
+      seen,
+      country,
       genres: film.genres.toString(),
       directors: film.directors.toString(),
       actors: film.actors.toString(),
@@ -61,6 +82,8 @@ const Form = ({ film }) => {
       score,
       scoreComposer,
       originalTitle,
+      seen,
+      country,
     } = film;
     const setData = {
       year,
@@ -70,6 +93,8 @@ const Form = ({ film }) => {
       score,
       scoreComposer,
       originalTitle,
+      seen,
+      country,
       genres: film.genres.toString(),
       directors: film.directors.toString(),
       actors: film.actors.toString(),
@@ -94,6 +119,8 @@ const Form = ({ film }) => {
       score,
       scoreComposer,
       originalTitle,
+      seen,
+      country,
     } = filmData;
 
     let filmSubmit = {
@@ -104,6 +131,8 @@ const Form = ({ film }) => {
       score,
       scoreComposer,
       originalTitle,
+      seen,
+      country,
       genres: [],
       directors: [],
       actors: [],
@@ -163,17 +192,51 @@ const Form = ({ film }) => {
             setFilmData({ ...filmData, directors: e.target.value })
           }
         />
-        <TextField
-          id="yearInput"
-          type="year"
-          name="year"
-          variant="outlined"
-          label="Année"
-          fullWidth
-          size="small"
-          value={filmData.year}
-          onChange={handleChange}
-        />
+        <Grid
+          container
+          direction="row"
+          justify-content="space-between"
+          align-items="flex-start"
+          align-content="flex-start"
+          spacing={4}
+        >
+          <Grid item xs={4}>
+            <TextField
+              id="yearInput"
+              type="year"
+              name="year"
+              variant="outlined"
+              label="Année"
+              value={filmData.year}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              name="country"
+              variant="outlined"
+              label="Pays"
+              value={filmData.country}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <FormControlLabel
+              control={
+                <GreyCheckbox
+                  className={classes.checkbox}
+                  checked={filmData.seen}
+                  onChange={() => {
+                    const data = { ...filmData };
+                    data.seen = !filmData.seen;
+                    setFilmData(data);
+                  }}
+                />
+              }
+              label="Vu"
+            />
+          </Grid>
+        </Grid>
         <TextField
           name="summary"
           variant="outlined"
@@ -213,9 +276,10 @@ const Form = ({ film }) => {
           onChange={handleChange}
         />
         <Rating
-          name="simple-controlled"
+          name="score"
           value={+filmData.score}
           precision={0.5}
+          max={3}
           onChange={(event, newValue) => {
             const data = { ...filmData };
             data.score = newValue;

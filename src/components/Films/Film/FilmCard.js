@@ -7,13 +7,17 @@ import {
   CardContent,
   CardMedia,
   CardHeader,
+  Checkbox,
   Button,
   Grid,
   Paper,
   Typography,
 } from '@material-ui/core/';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Rating from '@material-ui/lab/Rating';
+import { withStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 
 import displayArrayItems from '../../../utils/displayArrayItems';
@@ -24,6 +28,18 @@ import Form from '../../form/FormB';
 import { deleteFilm } from '../../../actions/films';
 import Presentation from './Presentation';
 import defaultImage from '../../../images/default_picture.jfif';
+
+const GreyCheckbox = withStyles({
+  root: {
+    color: '#2980b9',
+    '&$checked': {
+      color: '#2980b9',
+    },
+  },
+  checked: {
+    justifyContent: 'center',
+  },
+})((props) => <Checkbox color="default" {...props} />);
 
 const FilmCard = () => {
   const { id } = useParams();
@@ -83,6 +99,7 @@ const FilmCard = () => {
                         {!film.directors.length > 0 && film.year && (
                           <>{film.year}</>
                         )}
+                        {film.country && <>&nbsp;({film.country})</>}
                       </Typography>
                     </div>
                   )}
@@ -115,16 +132,38 @@ const FilmCard = () => {
                       {film.summary}
                     </Typography>
                   )}
-                  {film.score && (
-                    <div style={{textAlign: "center"}}>
-                    <Rating
-                      name="read-only"
-                      value={+film.score}
-                      readOnly
-                      precision={0.5}
-                    />
-                    </div> 
-                  )}
+                  <Grid
+                    container
+                    justifyContent="space-evenly"
+                    style={{ padding: '10px' }}
+                  >
+                  <Grid item xs={4}></Grid>
+                    <Grid item xs={2}>
+                      {film.seen && (
+                        <VisibilityIcon
+                          style={{ color: '#2980b9'}}
+                        />
+                      )}
+                      {!film.seen && (
+                        <VisibilityOffIcon
+                          style={{ color: '#2980b9' }}
+                        />
+                      )}
+                    </Grid>
+                    <Grid item xs={4}>
+                      {film.score && (
+                        <div>
+                          <Rating
+                            name="read-only"
+                            value={+film.score}
+                            readOnly
+                            precision={0.5}
+                            max={3}
+                          />
+                        </div>
+                      )}
+                    </Grid>
+                  </Grid>
                 </CardContent>
                 <CardActions className={classes.cardActions}>
                   <Button size="small" color="primary" onClick={handleDelete}>

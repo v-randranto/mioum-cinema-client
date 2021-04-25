@@ -62,4 +62,9 @@ export default makeStyles({
   backHomeBtn: {
     marginBottom: '20px',
   },
+  form: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
 });
