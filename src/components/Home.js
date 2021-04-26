@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const films = useSelector((state) => state.films);
+  
   const [currentId, setCurrentId] = useState(0);
-  const [sortCriterion, setSortCriterion] = useState(0);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -55,7 +55,6 @@ export default function Home() {
       <main>
         <Presentation
           handleOpen={handleOpen}
-          setSortCriterion={setSortCriterion}
           nbFilms={films.length}
         />
         <Paper className={classes.paper}>
@@ -73,7 +72,6 @@ export default function Home() {
                   setCurrentId={setCurrentId}
                   open={open}
                   handleOpen={handleOpen}
-                  sortCriterion={sortCriterion}
                 />
               </Grid>
             </Grid>

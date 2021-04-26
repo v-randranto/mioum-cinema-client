@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import * as Toggles from '../actions/sortToggles';
+import * as Criteria from '../actions/sortCriteria';
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -15,44 +18,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Presentation = ({ handleOpen, setSortCriterion, nbFilms }) => {
+const Presentation = ({ handleOpen, nbFilms }) => {
+  const sortToggles = useSelector((state) => state.sortToggles);
+  const dispatch = useDispatch();
   const classes = useStyles();
-  const [titleSortToggle, setTitleSortToggle] = useState(false);
-  const [directorSortToggle, setDirectorSortToggle] = useState(false);
-  const [yearSortToggle, setYearSortToggle] = useState(false);
-  const nbFilmsText = nbFilms ? `(${nbFilms})` : ""
+  const nbFilmsText = nbFilms ? `(${nbFilms})` : '';
+  const { titleToggle, directorToggle, yearToggle } = sortToggles;
 
   const handleSortTitle = () => {
-    if (titleSortToggle) {
-      setSortCriterion(11);
-    } else {
-      setSortCriterion(10);
-    }
-    setTitleSortToggle(!titleSortToggle);
-    setDirectorSortToggle(false);
-    setYearSortToggle(false);
+    dispatch(Criteria.sortByTitle(titleToggle))
+    dispatch(Toggles.sortByTitle(titleToggle));
   };
 
   const handleSortDirector = () => {
-    if (directorSortToggle) {
-      setSortCriterion(21);
-    } else {
-      setSortCriterion(20);
-    }
-    setDirectorSortToggle(!directorSortToggle);
-    setTitleSortToggle(false);
-    setYearSortToggle(false);
+    dispatch(Criteria.sortByDirector(directorToggle))
+    dispatch(Toggles.sortByDirector(directorToggle));
   };
 
   const handleSortYear = () => {
-    if (yearSortToggle) {
-      setSortCriterion(31);
-    } else {
-      setSortCriterion(30);
-    }
-    setYearSortToggle(!yearSortToggle);
-    setTitleSortToggle(false);
-    setDirectorSortToggle(false);
+    dispatch(Criteria.sortByYear(yearToggle))
+    dispatch(Toggles.sortByYear(yearToggle));
   };
   return (
     <div className={classes.heroContent}>

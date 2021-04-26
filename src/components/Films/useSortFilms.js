@@ -1,20 +1,20 @@
 import {sortByTitle, sortByDirector} from '../../utils/sortHandler'
 
-const useSortFilms = (sortCriterion, films) => {
-  switch (sortCriterion) {
-    case 0:
-    case 11:
-    case 21:
-    case 31:
+const useSortFilms = (sortCriteria, films) => {
+  switch (sortCriteria) {
+    case "":
+    case "TITLE_DESC":
+    case "DIRECTOR_DESC":
+    case "YEAR_DESC":
       films.reverse();
       return;
-    case 10:
+    case "TITLE_ASC":
       films.sort(sortByTitle);
       return;
-    case 20:
+    case "DIRECTOR_ASC":
       films.sort(sortByDirector);
       return;
-    case 30:
+    case "YEAR_ASC":
       films.sort((a, b) => a.year - b.year);
       return;
     default:

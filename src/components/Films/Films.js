@@ -7,9 +7,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Film from './film/Film';
 import useSortFilms from './useSortFilms';
 
-const Films = ({ setCurrentId, open, handleOpen, sortCriterion }) => {
+const Films = ({ setCurrentId, open, handleOpen }) => {
   const films = useSelector((state) => state.films);
-  useSortFilms(sortCriterion, films);
+  const sortCriteria = useSelector((state) => state.sortCriteria);
+  useSortFilms(sortCriteria, films);
 
   return (
     <>

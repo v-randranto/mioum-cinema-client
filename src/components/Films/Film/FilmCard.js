@@ -17,7 +17,6 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Rating from '@material-ui/lab/Rating';
-import { withStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 
 import displayArrayItems from '../../../utils/displayArrayItems';
@@ -28,18 +27,6 @@ import Form from '../../form/FormB';
 import { deleteFilm } from '../../../actions/films';
 import Presentation from './Presentation';
 import defaultImage from '../../../images/default_picture.jfif';
-
-const GreyCheckbox = withStyles({
-  root: {
-    color: '#2980b9',
-    '&$checked': {
-      color: '#2980b9',
-    },
-  },
-  checked: {
-    justifyContent: 'center',
-  },
-})((props) => <Checkbox color="default" {...props} />);
 
 const FilmCard = () => {
   const { id } = useParams();
@@ -134,7 +121,6 @@ const FilmCard = () => {
                   )}
                   <Grid
                     container
-                    justifyContent="space-evenly"
                     style={{ padding: '10px' }}
                   >
                   <Grid item xs={4}></Grid>
