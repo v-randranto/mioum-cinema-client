@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -10,11 +11,11 @@ import Rating from '@material-ui/lab/Rating';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import Grid from '@material-ui/core/Grid';
-
 import { makeStyles } from '@material-ui/core/styles';
+
 import displayArrayItems from '../../../utils/displayArrayItems';
 import defaultImage from '../../../images/default_picture.jfif';
-
+import { deleteFilm } from '../../../actions/films';
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   cardActions: {
-    padding: '0 8px 8px 8px',
+    padding: '0 0 8px 0',
     display: 'flex',
     justifyContent: 'space-between',
     fontSize: '0.8rem',
@@ -59,10 +60,16 @@ const useStyles = makeStyles((theme) => ({
 const Film = ({ film, setCurrentId, open, handleOpen }) => {
   const history = useHistory();
   const classes = useStyles();
+  const dispatch = useDispatch();
   const handleView = () => {
     setCurrentId(film._id);
     history.push(`/film-card/${film._id}`);
   };
+
+  const handleDelete = () => {
+    dispatch(deleteFilm(film._id));
+  };
+
   const handleUpdate = () => {
     handleOpen();
     setCurrentId(film._id);
@@ -71,7 +78,7 @@ const Film = ({ film, setCurrentId, open, handleOpen }) => {
     <Card className={classes.card}>
       <CardMedia
         className={classes.cardMedia}
-        image={film.selectedFile || defaultImage}
+        image={film.photoUrl || defaultImage}
         title="Photo du film"
         onClick={handleView}
       />
@@ -92,15 +99,19 @@ const Film = ({ film, setCurrentId, open, handleOpen }) => {
           justify-content="space-between"
           align-items="center"
           align-content="center"
-          style={{ padding: '10px 0' }}
+          style={{ padding: '5px 0' }}
         >
-        <Grid item xs={4}></Grid>
+          <Grid item xs={3} ></Grid>
           <Grid item xs={2}>
             {film.seen && (
-              <VisibilityIcon style={{color: "#2980b9", fontSize: "1.2rem"}}/>
+              <VisibilityIcon
+                style={{ color: '#2980b9', fontSize: '1.2rem'}}
+              />
             )}
             {!film.seen && (
-              <VisibilityOffIcon style={{color: "#2980b9", fontSize: "1.2rem"}}/>
+              <VisibilityOffIcon
+                style={{ color: '#2980b9', fontSize: '1.2rem'}}
+              />
             )}
           </Grid>
           <Grid item xs={4}>
@@ -112,7 +123,7 @@ const Film = ({ film, setCurrentId, open, handleOpen }) => {
                   readOnly
                   precision={0.5}
                   max={3}
-                  style={{fontSize: "1.2rem"}}
+                  style={{ fontSize: '1.2rem' }}
                 />
               </div>
             )}
@@ -122,16 +133,16 @@ const Film = ({ film, setCurrentId, open, handleOpen }) => {
           <Button
             style={{ fontSize: '0.7rem', paddingBottom: 0 }}
             color="primary"
-            onClick={handleView}
+            onClick={handleUpdate}
           >
-            Voir
+            Modifier
           </Button>
           <Button
             style={{ fontSize: '0.7rem', paddingBottom: 0 }}
             color="primary"
-            onClick={handleUpdate}
+            onClick={handleDelete}
           >
-            Modifier
+            Supprimer
           </Button>
         </CardActions>
       </CardContent>

@@ -7,7 +7,6 @@ import {
   CardContent,
   CardMedia,
   CardHeader,
-  Checkbox,
   Button,
   Grid,
   Paper,
@@ -65,7 +64,7 @@ const FilmCard = () => {
                 />
                 <CardMedia
                   className={classes.media}
-                  image={film.selectedFile || defaultImage}
+                  image={film.photoUrl || defaultImage}
                   title={film.title}
                 />
                 <CardContent className={classes.cardContent}>

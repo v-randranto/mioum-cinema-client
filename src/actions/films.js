@@ -1,5 +1,6 @@
 import {
   FETCH_ALL,
+  FETCH,
   CREATE,
   UPDATE,
   DELETE,
@@ -11,6 +12,15 @@ export const getFilms = () => async (dispatch) => {
   try {
     const { data } = await api.fetchFilms();
     dispatch({ type: FETCH_ALL, payload: data });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const getFilm = (id) => async (dispatch) => {
+  try {
+    const { data } = await api.fetchFilm(id);
+    dispatch({ type: FETCH, payload: data });
   } catch (error) {
     console.log(error.message);
   }

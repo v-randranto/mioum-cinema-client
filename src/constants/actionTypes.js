@@ -1,6 +1,7 @@
 export const CREATE = 'CREATE';
 export const UPDATE = 'UPDATE';
 export const DELETE = 'DELETE';
+export const FETCH = 'FETCH';
 export const FETCH_ALL = 'FETCH_ALL';
 export const TOGGLE_TITLE = 'TOGGLE_TITLE';
 export const TOGGLE_DIRECTOR = 'TOGGLE_DIRECTOR';
