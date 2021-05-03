@@ -1,12 +1,10 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import * as Toggles from '../actions/sortToggles';
-import * as Criteria from '../actions/sortCriteria';
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -16,64 +14,29 @@ const useStyles = makeStyles((theme) => ({
   heroButtons: {
     marginTop: theme.spacing(2),
   },
+  formInline: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+    alignItems: 'center',
+  },
+  formBtn: {
+    marginLeft: theme.spacing(2),
+  },
 }));
 
-const Presentation = ({ handleOpen, nbFilms }) => {
-  const sortToggles = useSelector((state) => state.sortToggles);
-  const dispatch = useDispatch();
+const Presentation = ({ handleOpen, nbFilms, doFilter }) => {
   const classes = useStyles();
   const nbFilmsText = nbFilms ? `(${nbFilms})` : '';
-  const { titleToggle, directorToggle, yearToggle } = sortToggles;
 
-  const handleSortTitle = () => {
-    dispatch(Criteria.sortByTitle(titleToggle))
-    dispatch(Toggles.sortByTitle(titleToggle));
-  };
-
-  const handleSortDirector = () => {
-    dispatch(Criteria.sortByDirector(directorToggle))
-    dispatch(Toggles.sortByDirector(directorToggle));
-  };
-
-  const handleSortYear = () => {
-    dispatch(Criteria.sortByYear(yearToggle))
-    dispatch(Toggles.sortByYear(yearToggle));
-  };
   return (
     <div className={classes.heroContent}>
-      <Container maxWidth="md">
+      <Container maxWidth="xl">
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
           Ma petite collection de films {nbFilmsText}
         </Typography>
+
         <div className={classes.heroButtons}>
-          <Grid container spacing={2} justify="center">
-            <Grid item>
-              <Button
-                variant="contained"
-                color="inherit"
-                onClick={handleSortTitle}
-              >
-                Par titre
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                color="inherit"
-                onClick={handleSortDirector}
-              >
-                Par réalisateur
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                color="inherit"
-                onClick={handleSortYear}
-              >
-                Par année
-              </Button>
-            </Grid>
+          <Grid container spacing={2} justify="center" alignItems="center">
             <Grid item>
               <Button
                 variant="contained"

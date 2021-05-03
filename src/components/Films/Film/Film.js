@@ -18,6 +18,7 @@ import defaultImage from '../../../images/default_picture.jfif';
 import { deleteFilm } from '../../../actions/films';
 
 const useStyles = makeStyles((theme) => ({
+  
   cardGrid: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
@@ -55,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
   detailDirector: {
     fontSize: '0.8rem',
   },
+  seenIcon: {
+    color: '#2980b9', 
+    fontSize: '1.2rem'
+  },
+  
 }));
 
 const Film = ({ film, setCurrentId, open, handleOpen }) => {
@@ -104,13 +110,12 @@ const Film = ({ film, setCurrentId, open, handleOpen }) => {
           <Grid item xs={3} ></Grid>
           <Grid item xs={2}>
             {film.seen && (
-              <VisibilityIcon
-                style={{ color: '#2980b9', fontSize: '1.2rem'}}
+              <VisibilityIcon className={classes.seenIcon}
               />
             )}
             {!film.seen && (
               <VisibilityOffIcon
-                style={{ color: '#2980b9', fontSize: '1.2rem'}}
+                className={classes.seenIcon}
               />
             )}
           </Grid>

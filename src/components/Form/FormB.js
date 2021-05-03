@@ -10,7 +10,9 @@ import FileBase from 'react-file-base64';
 
 import useStyles from './styles';
 import { updateFilm } from '../../actions/films';
+
 import removeCommaEnding from '../../utils/removeCommaEnding';
+import filmFormModel from '../../models/filmForm';
 
 const GreyCheckbox = withStyles({
   root: {
@@ -22,23 +24,8 @@ const GreyCheckbox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
-const formInit = {
-  year: '',
-  originalTitle: '',
-  directors: '',
-  title: '',
-  summary: '',
-  genres: '',
-  actors: '',
-  score: '',
-  scoreComposer: '',
-  seen: false,
-  country: '',
-  selectedFile: '',
-};
-
 const Form = ({ film }) => {
-  const [filmData, setFilmData] = useState(formInit);
+  const [filmData, setFilmData] = useState(filmFormModel);
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -52,7 +39,6 @@ const Form = ({ film }) => {
       scoreComposer,
       originalTitle,
       seen,
-      country,
     } = film;
     const setData = {
       year,
@@ -63,7 +49,7 @@ const Form = ({ film }) => {
       scoreComposer,
       originalTitle,
       seen,
-      country,
+      countries: film.countries.toString(),
       genres: film.genres.toString(),
       directors: film.directors.toString(),
       actors: film.actors.toString(),
@@ -82,7 +68,6 @@ const Form = ({ film }) => {
       scoreComposer,
       originalTitle,
       seen,
-      country,
     } = film;
     const setData = {
       year,
@@ -93,7 +78,7 @@ const Form = ({ film }) => {
       scoreComposer,
       originalTitle,
       seen,
-      country,
+      countries: film.countries.toString(),
       genres: film.genres.toString(),
       directors: film.directors.toString(),
       actors: film.actors.toString(),
@@ -119,7 +104,6 @@ const Form = ({ film }) => {
       scoreComposer,
       originalTitle,
       seen,
-      country,
     } = filmData;
 
     let filmSubmit = {
@@ -131,7 +115,7 @@ const Form = ({ film }) => {
       scoreComposer,
       originalTitle,
       seen,
-      country,
+      countries: film.countries.toString(),
       genres: [],
       directors: [],
       actors: [],
@@ -147,6 +131,11 @@ const Form = ({ film }) => {
     }
     if (filmData.genres && filmData.genres.length) {
       filmSubmit.genres = removeCommaEnding(filmData.genres.trim()).split(',');
+    }
+    if (filmData.countries && filmData.countries.length) {
+      filmSubmit.countries = removeCommaEnding(filmData.countries.trim()).split(
+        ','
+      );
     }
     dispatch(updateFilm(film._id, filmSubmit));
   };
@@ -187,9 +176,7 @@ const Form = ({ film }) => {
           fullWidth
           size="small"
           value={filmData.directors}
-          onChange={(e) =>
-            setFilmData({ ...filmData, directors: e.target.value })
-          }
+          onChange={handleChange}
         />
         <Grid
           container
@@ -212,10 +199,10 @@ const Form = ({ film }) => {
           </Grid>
           <Grid item xs={4}>
             <TextField
-              name="country"
+              name="countries"
               variant="outlined"
               label="Pays"
-              value={filmData.country}
+              value={filmData.countries}
               onChange={handleChange}
             />
           </Grid>

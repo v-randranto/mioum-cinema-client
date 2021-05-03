@@ -85,7 +85,13 @@ const FilmCard = () => {
                         {!film.directors.length > 0 && film.year && (
                           <>{film.year}</>
                         )}
-                        {film.country && <>&nbsp;({film.country})</>}
+                      </Typography>
+                    </div>
+                  )}
+                  {film.countries.length > 0 && (
+                    <div className={classes.details}>
+                      <Typography paragraph>
+                      {displayArrayItems(film.countries)}
                       </Typography>
                     </div>
                   )}
@@ -118,21 +124,14 @@ const FilmCard = () => {
                       {film.summary}
                     </Typography>
                   )}
-                  <Grid
-                    container
-                    style={{ padding: '10px' }}
-                  >
-                  <Grid item xs={4}></Grid>
+                  <Grid container style={{ padding: '10px' }}>
+                    <Grid item xs={4}></Grid>
                     <Grid item xs={2}>
                       {film.seen && (
-                        <VisibilityIcon
-                          style={{ color: '#2980b9'}}
-                        />
+                        <VisibilityIcon style={{ color: '#2980b9' }} />
                       )}
                       {!film.seen && (
-                        <VisibilityOffIcon
-                          style={{ color: '#2980b9' }}
-                        />
+                        <VisibilityOffIcon style={{ color: '#2980b9' }} />
                       )}
                     </Grid>
                     <Grid item xs={4}>

@@ -9,7 +9,9 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import useStyles from './styles';
 import { createFilm, updateFilm } from '../../actions/films';
+
 import removeCommaEnding from '../../utils/removeCommaEnding';
+import filmFormModel from '../../models/filmForm'
 
 const GreyCheckbox = withStyles({
   root: {
@@ -21,23 +23,9 @@ const GreyCheckbox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
-const formInit = {
-  year: '',
-  originalTitle: '',
-  directors: '',
-  title: '',
-  summary: '',
-  genres: '',
-  actors: '',
-  score: '',
-  scoreComposer: '',
-  seen: false,
-  country: '',
-  selectedFile: '',
-};
-
 const Form = ({ currentId, setCurrentId, handleClose }) => {
-  const [filmData, setFilmData] = useState(formInit);
+  const [filmData, setFilmData] = useState(filmFormModel);
+  const [saveData, setSaveData] = useState();
   const film = useSelector((state) =>
     currentId ? state.films.find((summary) => summary._id === currentId) : null
   );
@@ -56,7 +44,6 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
         scoreComposer,
         originalTitle,
         seen,
-        country,
       } = film;
       setData = {
         year,
@@ -66,19 +53,24 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
         score,
         scoreComposer,
         originalTitle,
+        seen,
         genres: film.genres.toString(),
         directors: film.directors.toString(),
-        actors: film.actors.toString(),
-        seen,
-        country,
+        actors: film.actors.toString(),   
+        countries: film.countries.toString(),
       };
     }
     setFilmData(setData);
+    setSaveData(setData);
   }, [film]);
 
   const clear = () => {
     setCurrentId(0);
-    setFilmData(formInit);
+    setFilmData(filmFormModel);
+  };
+
+  const reset = () => {
+    setFilmData(saveData);
   };
 
   const handleChange = (e) => {
@@ -99,7 +91,6 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
       scoreComposer,
       originalTitle,
       seen,
-      country,
     } = filmData;
 
     let filmSubmit = {
@@ -111,7 +102,7 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
       scoreComposer,
       originalTitle,
       seen,
-      country,
+      countries: [],
       genres: [],
       directors: [],
       actors: [],
@@ -129,11 +120,17 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
       filmSubmit.genres = removeCommaEnding(filmData.genres.trim()).split(',');
     }
 
+    if (filmData.countries && filmData.countries.length) {
+      filmSubmit.countries = removeCommaEnding(filmData.countries.trim()).split(',');
+    }
+
     if (currentId === 0) {
       dispatch(createFilm(filmSubmit));
+      
       clear();
     } else {
       dispatch(updateFilm(currentId, filmSubmit));
+      
       clear();
       handleClose();
     }
@@ -180,9 +177,7 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
           fullWidth
           value={filmData.directors}
           size="small"
-          onChange={(e) =>
-            setFilmData({ ...filmData, directors: e.target.value })
-          }
+          onChange={handleChange}
         />
         <Grid
           container
@@ -205,10 +200,10 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
           </Grid>
           <Grid item xs={4}>
             <TextField
-              name="country"
+              name="countries"
               variant="outlined"
               label="Pays"
-              value={filmData.country}
+              value={filmData.countries}
               onChange={handleChange}
             />
           </Grid>
@@ -305,10 +300,10 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
           variant="contained"
           color="secondary"
           size="small"
-          onClick={clear}
+          onClick={reset}
           fullWidth
         >
-          Effacer
+          Réinitialiser
         </Button>
       </form>
     </Paper>
