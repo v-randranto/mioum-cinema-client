@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Home() {
-  const films = useSelector((state) => state.films);
+  const filmsData = useSelector((state) => state.filmsData);
 
   const [currentId, setCurrentId] = useState(0);
   const [open, setOpen] = useState(false);
@@ -43,7 +43,7 @@ export default function Home() {
 
   useEffect(() => {
     console.log('getFilms');
-    dispatch(getFilms());
+    dispatch(getFilms(1, 20));
   }, [currentId, dispatch]);
   const handleOpen = () => {
     setOpen(true);
@@ -55,12 +55,12 @@ export default function Home() {
   return (
     <>
       <CssBaseline />
-      {films?.length ? (
+      {filmsData?.filmsTotal > 0 ? (
         <main>
           <Presentation
             maxWidth="xl"
             handleOpen={handleOpen}
-            nbFilms={films.length}
+            nbFilms={filmsData.totalFilms}
           />
 
           <Paper className={classes.paper}>
@@ -69,7 +69,7 @@ export default function Home() {
                 setCurrentId={setCurrentId}
                 open={open}
                 handleOpen={handleOpen}
-                nbFilms={films.length}
+                nbFilms={filmsData.totalFilms}
               />
             </Container>
           </Paper>

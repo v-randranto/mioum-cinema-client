@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Presentation = ({ handleOpen, nbFilms, doFilter }) => {
+const Presentation = ({ handleOpen, nbFilms }) => {
   const classes = useStyles();
   const nbFilmsText = nbFilms ? `(${nbFilms})` : '';
 

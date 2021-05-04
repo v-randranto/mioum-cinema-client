@@ -1,10 +1,17 @@
 import * as Actions from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
-export const getFilms = () => async (dispatch) => {
+export const getFilms = (page, size) => async (dispatch) => {
+  
   try {
-    const { data } = await api.fetchFilms();
-    await dispatch({ type: Actions.FETCH_ALL, payload: data });
+    const { data } = await api.fetchFilms(page, size);
+    const payload = {
+      films: data.films,
+      count: data.totalPages,
+      page: data.currentPage,
+      filmsTotal: data.totalItems
+    }
+    dispatch({ type: Actions.FETCH_ALL, payload });
   } catch (error) {
     console.log(error.message);
   }
