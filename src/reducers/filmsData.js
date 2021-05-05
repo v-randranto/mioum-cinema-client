@@ -8,15 +8,24 @@ const filmsDataInit = {
 };
 
 const reducer = (filmsData = filmsDataInit, action) => {
+  const { films} = filmsData;
+  const {payload} = action
+  console.log('filmsData', filmsData)
+  console.log('payload', payload)
+  let index = 0
   switch (action.type) {
     case Actions.FETCH_ALL:
-      return action.payload;
-    case Actions.CREATE:
-      return action.payload;
+      return payload;
+      case Actions.CREATE:
+        films.push(payload)
+        return {...filmsData, films};
     case Actions.UPDATE:
-      return action.payload;
-    case Actions.DELETE:
-      return action.payload;
+      index = films.findIndex((f) => f._id === payload.id);
+      films[index] = payload.film;
+      return {...filmsData, films};
+      case Actions.DELETE:
+        films.filter((film) => film._id !== payload);
+        return {...filmsData, films};
     default:
       return filmsData;
   }

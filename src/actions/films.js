@@ -1,16 +1,15 @@
 import * as Actions from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
-export const getFilms = (page, size) => async (dispatch) => {
-  
+export const getFilms = (page = 1) => async (dispatch) => {
   try {
-    const { data } = await api.fetchFilms(page, size);
+    const { data } = await api.fetchFilms(page, 3);
     const payload = {
       films: data.films,
       count: data.totalPages,
       page: data.currentPage,
-      filmsTotal: data.totalItems
-    }
+      filmsTotal: data.totalItems,
+    };
     dispatch({ type: Actions.FETCH_ALL, payload });
   } catch (error) {
     console.log(error.message);
@@ -28,7 +27,7 @@ export const getFilm = (id) => async (dispatch) => {
 
 export const createFilm = (film) => async (dispatch) => {
   try {
-    const { data } = await api.createFilm(film);
+    const {data} = await api.createFilm(film);
     dispatch({ type: Actions.CREATE, payload: data });
   } catch (error) {
     console.log(error.message);
@@ -36,10 +35,10 @@ export const createFilm = (film) => async (dispatch) => {
 };
 
 export const updateFilm = (id, film) => async (dispatch) => {
-
   try {
     const { data } = await api.updateFilm(id, film);
-    dispatch({ type: Actions.UPDATE, payload: data });
+
+    dispatch({ type: Actions.UPDATE, payload: { id, film: data } });
   } catch (error) {
     console.log(error.message);
   }

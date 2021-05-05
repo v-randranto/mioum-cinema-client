@@ -26,9 +26,9 @@ const GreyCheckbox = withStyles({
 const Form = ({ currentId, setCurrentId, handleClose }) => {
   const [filmData, setFilmData] = useState(filmFormModel);
   const [saveData, setSaveData] = useState();
-  const film = useSelector((state) =>
-    currentId ? state.films.find((summary) => summary._id === currentId) : null
-  );
+  const filmsData = useSelector((state) => state.filmsData);
+  const {films} = filmsData
+  const film = currentId ? films.find((summary) => summary._id === currentId) : null
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -126,7 +126,7 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
 
     if (currentId === 0) {
       dispatch(createFilm(filmSubmit));
-      
+      // dispatch(getFilms(page));
       clear();
     } else {
       dispatch(updateFilm(currentId, filmSubmit));

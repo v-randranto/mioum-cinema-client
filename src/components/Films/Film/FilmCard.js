@@ -23,21 +23,22 @@ import useStyles from './styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Form from '../../form/FormB';
-import { deleteFilm } from '../../../actions/films';
+import { deleteFilm, getFilms } from '../../../actions/films';
 import Presentation from './Presentation';
 import defaultImage from '../../../images/default_picture.jfif';
 
 const FilmCard = () => {
   const { id } = useParams();
   const history = useHistory();
-  const film = useSelector((state) =>
-    id ? state.films.find((summary) => summary._id === id) : null
-  );
+  const filmsData = useSelector((state) => state.filmsData);
+  const {page} = filmsData
+  const film = id ? filmsData.films.find((summary) => summary._id === id) : null
   const dispatch = useDispatch();
   const classes = useStyles();
 
   const handleDelete = () => {
     dispatch(deleteFilm(film._id));
+    dispatch(getFilms(page));
     history.push('/home');
   };
 

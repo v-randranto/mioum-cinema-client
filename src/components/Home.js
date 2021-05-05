@@ -43,12 +43,13 @@ export default function Home() {
 
   useEffect(() => {
     console.log('getFilms');
-    dispatch(getFilms(1, 20));
-  }, [currentId, dispatch]);
+    dispatch(getFilms(filmsData?.page));
+  }, [dispatch, filmsData.page]);
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
+    setCurrentId(0)
     setOpen(false);
   };
 
@@ -60,7 +61,7 @@ export default function Home() {
           <Presentation
             maxWidth="xl"
             handleOpen={handleOpen}
-            nbFilms={filmsData.totalFilms}
+            nbFilms={filmsData.filmsTotal}
           />
 
           <Paper className={classes.paper}>
@@ -69,7 +70,7 @@ export default function Home() {
                 setCurrentId={setCurrentId}
                 open={open}
                 handleOpen={handleOpen}
-                nbFilms={filmsData.totalFilms}
+                nbFilms={filmsData.filmsTotal}
               />
             </Container>
           </Paper>

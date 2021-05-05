@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -15,10 +15,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import displayArrayItems from '../../../utils/displayArrayItems';
 import defaultImage from '../../../images/default_picture.jfif';
-import { deleteFilm } from '../../../actions/films';
+import { deleteFilm, getFilms } from '../../../actions/films';
 
 const useStyles = makeStyles((theme) => ({
-  
   cardGrid: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
@@ -57,13 +56,14 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.8rem',
   },
   seenIcon: {
-    color: '#2980b9', 
-    fontSize: '1.2rem'
+    color: '#2980b9',
+    fontSize: '1.2rem',
   },
-  
 }));
 
-const Film = ({ film, setCurrentId, open, handleOpen }) => {
+const Film = ({ film, setCurrentId, currentId, open, handleOpen }) => {
+  const filmsData = useSelector((state) => state.filmsData);
+  const { page } = filmsData;
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -74,6 +74,7 @@ const Film = ({ film, setCurrentId, open, handleOpen }) => {
 
   const handleDelete = () => {
     dispatch(deleteFilm(film._id));
+    dispatch(getFilms(page));
   };
 
   const handleUpdate = () => {
@@ -107,17 +108,10 @@ const Film = ({ film, setCurrentId, open, handleOpen }) => {
           align-content="center"
           style={{ padding: '5px 0' }}
         >
-          <Grid item xs={3} ></Grid>
+          <Grid item xs={3}></Grid>
           <Grid item xs={2}>
-            {film.seen && (
-              <VisibilityIcon className={classes.seenIcon}
-              />
-            )}
-            {!film.seen && (
-              <VisibilityOffIcon
-                className={classes.seenIcon}
-              />
-            )}
+            {film.seen && <VisibilityIcon className={classes.seenIcon} />}
+            {!film.seen && <VisibilityOffIcon className={classes.seenIcon} />}
           </Grid>
           <Grid item xs={4}>
             {film.score && (

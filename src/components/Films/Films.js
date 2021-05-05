@@ -12,7 +12,7 @@ const Films = ({ setCurrentId, open, handleOpen }) => {
   const {films, count, page} = filmsData
 
   const handlePageChange = (e, newPage) => {
-    dispatch(getFilms(newPage, 20));
+    dispatch(getFilms(newPage));
   }
 
   return (
@@ -38,8 +38,6 @@ const Films = ({ setCurrentId, open, handleOpen }) => {
                 <Film
                   film={film}
                   setCurrentId={setCurrentId}
-                  npm
-                  start
                   open={open}
                   handleOpen={handleOpen}
                 />
