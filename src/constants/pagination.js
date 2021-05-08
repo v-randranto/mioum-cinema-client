@@ -1,1 +1,1 @@
-export const defaultSize = 20
+export const defaultSize = 24

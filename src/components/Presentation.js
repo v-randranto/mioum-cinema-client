@@ -173,6 +173,7 @@ const Presentation = ({ handleOpen, size }) => {
                     margin="dense"
                     label="Sens"
                   >
+                  <MenuItem value="">indif.</MenuItem>
                     <MenuItem value={1}>asc</MenuItem>
                     <MenuItem value={-1}>desc</MenuItem>
                   </Select>

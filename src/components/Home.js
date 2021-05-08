@@ -12,7 +12,6 @@ import { brown } from '@material-ui/core/colors';
 import Presentation from './Presentation';
 import Films from './films/Films';
 import { getFilms } from '../actions/films';
-import searchFormInit from '../models/searchFormInit';
 
 import Form from './form/Form';
 import { CircularProgress } from '@material-ui/core';
@@ -40,14 +39,14 @@ export default function Home() {
   const searchData = useSelector((state) => state.searchData);
   const [currentId, setCurrentId] = useState(0);
   const [open, setOpen] = useState(false);
+  const {page} = filmsData
   const dispatch = useDispatch();
   const classes = useStyles();
   
 
-  useEffect(() => {
-    console.log('searchData', searchData)    
-    dispatch(getFilms(0, null, searchData));
-  }, [dispatch, searchData]);
+  useEffect(() => {  
+    dispatch(getFilms(page, null, searchData));
+  }, [dispatch, searchData, page]);
   const handleOpen = () => {
     setOpen(true);
   };

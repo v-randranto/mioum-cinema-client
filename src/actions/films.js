@@ -1,15 +1,16 @@
 import * as Actions from '../constants/actionTypes';
 import * as api from '../api/index.js';
+import {defaultSize} from '../constants/pagination'
 
 export const getFilms = (page, size, searchData = null) => async (dispatch) => {
   const pageIndex = !page || page === 0 ? 0 : page - 1;
   try {
-    const { data } = await api.fetchFilms(pageIndex, (size = 20), searchData);
+    const { data } = await api.fetchFilms(pageIndex, (size = defaultSize), searchData);
     const payload = {
       films: data.films,
       count: data.totalPages,
       page: data.currentPage,
-      size: 20,
+      size: defaultSize,
       totalFilms: data.totalFilms,
       totalFilteredFilms: data.totalFilteredFilms,
     };
