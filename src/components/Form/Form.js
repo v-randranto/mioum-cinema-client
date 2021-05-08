@@ -134,8 +134,7 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
       // dispatch(getFilms(page));
       clear();
     } else {
-      dispatch(updateFilm(currentId, filmSubmit));
-      
+      dispatch(updateFilm(currentId, filmSubmit));      
       clear();
       handleClose();
     }

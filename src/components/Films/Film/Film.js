@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -15,7 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import displayArrayItems from '../../../utils/displayArrayItems';
 import defaultImage from '../../../images/default_picture.jfif';
-import { deleteFilm, getFilms } from '../../../actions/films';
+import { deleteFilm } from '../../../actions/films';
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -62,9 +62,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Film = ({ film, setCurrentId, currentId, open, handleOpen }) => {
-  const filmsData = useSelector((state) => state.filmsData);
-  const searchData = useSelector((state) => state.searchData)
-  const { page, size } = filmsData;
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -76,7 +73,7 @@ const Film = ({ film, setCurrentId, currentId, open, handleOpen }) => {
   const handleDelete = () => {
     setCurrentId(0);
     dispatch(deleteFilm(film._id));
-    dispatch(getFilms(page, size, searchData));
+    // dispatch(getFilms(page, size, searchData));
   };
 
   const handleUpdate = () => {

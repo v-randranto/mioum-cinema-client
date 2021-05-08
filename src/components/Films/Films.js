@@ -33,7 +33,7 @@ const Films = ({ setCurrentId, open, handleOpen }) => {
                 className="my-3"
                 count={count}
                 page={page}
-                siblingCount={0}
+                siblingCount={3}
                 boundaryCount={3}
                 showFirstButton
                 showLastButton
