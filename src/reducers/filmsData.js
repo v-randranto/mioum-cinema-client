@@ -2,7 +2,7 @@ import * as Actions from '../constants/actionTypes';
 
 const filmsDataInit = {
   films: [],
-  page: 1,
+  page: 0,
   count: 0,
   totalFilms: 0,
   totalFilteredFilms: 0,

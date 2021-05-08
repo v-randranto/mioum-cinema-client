@@ -33,20 +33,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const firstSearch = {
+  term: '',
+  minYear: '',
+  maxYear: '',
+  seen: '',
+  sort: 'lastModifiedAt',
+  direction: '-1',
+};
 
 export default function Home() {
   const filmsData = useSelector((state) => state.filmsData);
-  const searchData = useSelector((state) => state.searchData);
+  
   const [currentId, setCurrentId] = useState(0);
   const [open, setOpen] = useState(false);
-  const {page} = filmsData
+  
   const dispatch = useDispatch();
   const classes = useStyles();
-  
 
   useEffect(() => {  
-    dispatch(getFilms(page, null, searchData));
-  }, [dispatch, searchData, page]);
+    if (filmsData.page === 0) {
+      dispatch(getFilms(1, null, firstSearch));
+    }    
+  }, [dispatch, filmsData.page]);
+  
   const handleOpen = () => {
     setOpen(true);
   };

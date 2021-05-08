@@ -62,18 +62,23 @@ const Presentation = ({ handleOpen, size }) => {
     const { name, value } = e.target;
     const data = { ...searchForm };
     data[name] = value;
-    setSearchForm(data);
-    
-    
+    if (name === 'sort') {
+      if (value === '') {
+        data['direction'] = ''
+      } else {
+        data['direction'] = '1'
+      }      
+    }
+    setSearchForm(data);    
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(getFilms(0, size, searchForm));
+    dispatch(getFilms(1, size, searchForm));
     dispatch(setSearchData(searchForm));
   };
   const handleReset = async (e) => {
     e.preventDefault();
-    dispatch(getFilms(0, size, searchFormInit));
+    dispatch(getFilms(1, size, searchFormInit));
     setSearchForm(searchFormInit);
     dispatch(setSearchData(searchFormInit));
   };
@@ -98,11 +103,11 @@ const Presentation = ({ handleOpen, size }) => {
                   className={classes.formField}
                   name="term"
                   variant="outlined"
-                  label="Titre, réalisateur ou acteur"
+                  label="Titre, réalisateur, acteur ou genre"
                   value={searchForm.term}
                   margin="dense"
                   type="search"
-                  style={{ width: '250px' }}
+                  style={{ width: '300px' }}
                   onChange={handleChange}
                   width="80px"
                 ></TextField>

@@ -5,8 +5,8 @@ const searchDataInit = {
   minYear: '',
   maxYear: '',
   seen: '',
-  sort: 'lastModifiedAt',
-  direction: '-1',
+  sort: '',
+  direction: '',
 };
 
 const reducer = (searchData = searchDataInit, action) => {
