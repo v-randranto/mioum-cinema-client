@@ -63,7 +63,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Film = ({ film, setCurrentId, currentId, open, handleOpen }) => {
   const filmsData = useSelector((state) => state.filmsData);
-  const { page } = filmsData;
+  const searchData = useSelector((state) => state.searchData)
+  const { page, size } = filmsData;
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -73,8 +74,9 @@ const Film = ({ film, setCurrentId, currentId, open, handleOpen }) => {
   };
 
   const handleDelete = () => {
+    setCurrentId(0);
     dispatch(deleteFilm(film._id));
-    dispatch(getFilms(page));
+    dispatch(getFilms(page, size, searchData));
   };
 
   const handleUpdate = () => {

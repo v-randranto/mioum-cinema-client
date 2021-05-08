@@ -31,14 +31,15 @@ const FilmCard = () => {
   const { id } = useParams();
   const history = useHistory();
   const filmsData = useSelector((state) => state.filmsData);
-  const {page} = filmsData
+  const searchData = useSelector((state) => state.searchData)
+  const {page, size} = filmsData
   const film = id ? filmsData.films.find((summary) => summary._id === id) : null
   const dispatch = useDispatch();
   const classes = useStyles();
 
   const handleDelete = () => {
     dispatch(deleteFilm(film._id));
-    dispatch(getFilms(page));
+    dispatch(getFilms(page, size, searchData));
     history.push('/home');
   };
 

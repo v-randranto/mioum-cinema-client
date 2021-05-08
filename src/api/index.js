@@ -7,8 +7,17 @@ const urlApi =
 
 const url = `${urlApi}/api/films`;
 
-export const fetchFilms = (page, size) => {
-  return axios.get(`${url}?page=${page}&size=${size}`);
+export const fetchFilms = (page, size, searchData) => {
+  let search = ''
+  if (searchData) {
+    for (const [key, value] of Object.entries(searchData)) {
+      if (value !== '') {
+        search +=`&${key}=${value}`
+      }      
+    }
+  }
+  
+  return axios.get(`${url}?page=${page}&size=${size}${search}`);
 }
 export const fetchFilm = (id) => axios.get(`${url}/${id}`);
 export const createFilm = (newFilm) => axios.post(url, newFilm);

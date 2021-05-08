@@ -1,15 +1,19 @@
 import * as Actions from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
-export const getFilms = (page = 1) => async (dispatch) => {
+export const getFilms = (page, size, searchData = null) => async (dispatch) => {
+  const pageIndex = !page || page === 0 ? 0 : page - 1;
   try {
-    const { data } = await api.fetchFilms(page, 3);
+    const { data } = await api.fetchFilms(pageIndex, (size = 20), searchData);
     const payload = {
       films: data.films,
       count: data.totalPages,
       page: data.currentPage,
-      filmsTotal: data.totalItems,
+      size: 20,
+      totalFilms: data.totalFilms,
+      totalFilteredFilms: data.totalFilteredFilms,
     };
+
     dispatch({ type: Actions.FETCH_ALL, payload });
   } catch (error) {
     console.log(error.message);
@@ -27,7 +31,7 @@ export const getFilm = (id) => async (dispatch) => {
 
 export const createFilm = (film) => async (dispatch) => {
   try {
-    const {data} = await api.createFilm(film);
+    const { data } = await api.createFilm(film);
     dispatch({ type: Actions.CREATE, payload: data });
   } catch (error) {
     console.log(error.message);

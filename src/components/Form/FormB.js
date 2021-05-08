@@ -24,6 +24,11 @@ const GreyCheckbox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
+const yearProps = {
+  minLength: 4,
+  maxLength: 4,
+};
+
 const Form = ({ film }) => {
   const [filmData, setFilmData] = useState(filmFormModel);
   const dispatch = useDispatch();
@@ -189,10 +194,10 @@ const Form = ({ film }) => {
           <Grid item xs={4}>
             <TextField
               id="yearInput"
-              type="year"
               name="year"
               variant="outlined"
               label="Année"
+              inputProps={yearProps}
               value={filmData.year}
               onChange={handleChange}
             />

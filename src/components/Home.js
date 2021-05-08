@@ -12,6 +12,7 @@ import { brown } from '@material-ui/core/colors';
 import Presentation from './Presentation';
 import Films from './films/Films';
 import { getFilms } from '../actions/films';
+import searchFormInit from '../models/searchFormInit';
 
 import Form from './form/Form';
 import { CircularProgress } from '@material-ui/core';
@@ -33,35 +34,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export default function Home() {
   const filmsData = useSelector((state) => state.filmsData);
-
+  const searchData = useSelector((state) => state.searchData);
   const [currentId, setCurrentId] = useState(0);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const classes = useStyles();
+  
 
   useEffect(() => {
-    console.log('getFilms');
-    dispatch(getFilms(filmsData?.page));
-  }, [dispatch, filmsData.page]);
+    console.log('searchData', searchData)    
+    dispatch(getFilms(0, null, searchData));
+  }, [dispatch, searchData]);
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
-    setCurrentId(0)
+    setCurrentId(0);
     setOpen(false);
   };
 
   return (
     <>
       <CssBaseline />
-      {filmsData?.filmsTotal > 0 ? (
+      {filmsData?.totalFilms > 0 ? (
         <main>
           <Presentation
             maxWidth="xl"
             handleOpen={handleOpen}
-            nbFilms={filmsData.filmsTotal}
           />
 
           <Paper className={classes.paper}>
@@ -70,7 +72,6 @@ export default function Home() {
                 setCurrentId={setCurrentId}
                 open={open}
                 handleOpen={handleOpen}
-                nbFilms={filmsData.filmsTotal}
               />
             </Container>
           </Paper>
