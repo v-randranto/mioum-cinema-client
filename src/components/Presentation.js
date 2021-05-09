@@ -206,7 +206,7 @@ const Presentation = ({ handleOpen, size }) => {
                     variant="contained"
                     style={{ color: '#455A64' }}
                   >
-                    Résultats : {totalFilteredFilms} films
+                    Résultat : {totalFilteredFilms} films
                   </Button>
                 )}
               </Grid>

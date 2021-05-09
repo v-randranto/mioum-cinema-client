@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
@@ -16,6 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import displayArrayItems from '../../../utils/displayArrayItems';
 import defaultImage from '../../../images/default_picture.jfif';
 import { deleteFilm } from '../../../actions/films';
+import ConfirmDialog from './ConfirmDialog'
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -62,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Film = ({ film, setCurrentId, currentId, open, handleOpen }) => {
+  const [openDialog, setOpenDialog] = useState(false);
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -81,6 +83,7 @@ const Film = ({ film, setCurrentId, currentId, open, handleOpen }) => {
     setCurrentId(film._id);
   };
   return (
+    <>
     <Card className={classes.card}>
       <CardMedia
         className={classes.cardMedia}
@@ -138,13 +141,18 @@ const Film = ({ film, setCurrentId, currentId, open, handleOpen }) => {
           <Button
             style={{ fontSize: '0.7rem', paddingBottom: 0 }}
             color="primary"
-            onClick={handleDelete}
+            onClick={() => setOpenDialog(true)}
           >
             Supprimer
           </Button>
         </CardActions>
       </CardContent>
     </Card>
+    { openDialog && (
+      <ConfirmDialog onConfirm={handleDelete} setOpenDialog={setOpenDialog} openDialog={openDialog} />
+    )}
+   
+    </>
   );
 };
 

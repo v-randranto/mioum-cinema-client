@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
@@ -25,6 +25,7 @@ import Container from '@material-ui/core/Container';
 import Form from '../../form/FormB';
 import { deleteFilm, getFilms } from '../../../actions/films';
 import Presentation from './Presentation';
+import ConfirmDialog from './ConfirmDialog'
 import defaultImage from '../../../images/default_picture.jfif';
 
 const FilmCard = () => {
@@ -32,6 +33,7 @@ const FilmCard = () => {
   const history = useHistory();
   const filmsData = useSelector((state) => state.filmsData);
   const searchData = useSelector((state) => state.searchData)
+  const [openDialog, setOpenDialog] = useState(false);
   const {page, size} = filmsData
   const film = id ? filmsData.films.find((summary) => summary._id === id) : null
   const dispatch = useDispatch();
@@ -152,7 +154,7 @@ const FilmCard = () => {
                   </Grid>
                 </CardContent>
                 <CardActions className={classes.cardActions}>
-                  <Button size="small" color="primary" onClick={handleDelete}>
+                  <Button size="small" color="primary" onClick={() => setOpenDialog(true)}>
                     <DeleteIcon fontSize="small" /> Supprimer
                   </Button>
                 </CardActions>
@@ -165,6 +167,9 @@ const FilmCard = () => {
           </Grid>
         </Container>
       </Paper>
+      { openDialog && (
+  <ConfirmDialog onConfirm={handleDelete} setOpenDialog={setOpenDialog} openDialog={openDialog} />
+)}
     </>
   );
 };
