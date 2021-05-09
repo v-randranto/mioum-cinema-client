@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import useStyles from './styles';
 import { createFilm, updateFilm } from '../../actions/films';
+import { resetCurrentId } from '../../actions/currentId';
 
 import removeCommaEnding from '../../utils/removeCommaEnding';
 import filmFormModel from '../../models/filmForm'
@@ -28,12 +29,13 @@ const yearProps = {
   maxLength: 4,
 };
 
-const Form = ({ currentId, setCurrentId, handleClose }) => {
+const Form = ({ handleClose }) => {
   const [filmData, setFilmData] = useState(filmFormModel);
   const [saveData, setSaveData] = useState();
   const filmsData = useSelector((state) => state.filmsData);
+  const currentId = useSelector((state) => state.currentId);
   const {films} = filmsData
-  const film = currentId ? films.find((summary) => summary._id === currentId) : null
+  const film = currentId ? films.find((film) => film._id === currentId) : null
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -70,7 +72,7 @@ const Form = ({ currentId, setCurrentId, handleClose }) => {
   }, [film]);
 
   const clear = () => {
-    setCurrentId(0);
+    dispatch(resetCurrentId());
     setFilmData(filmFormModel);
   };
 

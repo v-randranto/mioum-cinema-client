@@ -12,6 +12,7 @@ import { brown } from '@material-ui/core/colors';
 import Presentation from './Presentation';
 import Films from './films/Films';
 import { getFilms } from '../actions/films';
+import { resetCurrentId } from '../actions/currentId';
 
 import Form from './form/Form';
 import { CircularProgress } from '@material-ui/core';
@@ -45,7 +46,6 @@ const firstSearch = {
 export default function Home() {
   const filmsData = useSelector((state) => state.filmsData);
   
-  const [currentId, setCurrentId] = useState(0);
   const [open, setOpen] = useState(false);
   
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ export default function Home() {
     setOpen(true);
   };
   const handleClose = () => {
-    setCurrentId(0);
+    dispatch(resetCurrentId());
     setOpen(false);
   };
 
@@ -78,7 +78,6 @@ export default function Home() {
           <Paper className={classes.paper}>
             <Container maxWidth="xl">
               <Films
-                setCurrentId={setCurrentId}
                 open={open}
                 handleOpen={handleOpen}
               />
@@ -97,8 +96,6 @@ export default function Home() {
           >
             <Fade in={open}>
               <Form
-                currentId={currentId}
-                setCurrentId={setCurrentId}
                 handleClose={handleClose}
               />
             </Fade>

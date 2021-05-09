@@ -1,33 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
 import Pagination from '@material-ui/lab/Pagination';
 import Typography from '@material-ui/core/Typography';
+import Modal from '@material-ui/core/Modal';
+import Fade from '@material-ui/core/Fade';
+import Backdrop from '@material-ui/core/Backdrop';
+import { makeStyles } from '@material-ui/core/styles';
+
 import Film from './film/Film';
+import FilmCard from './film/FilmCard'
 import { getFilms } from '../../actions/films';
 
-const Films = ({ setCurrentId, open, handleOpen }) => {
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '30%',
+    marginLeft: '33%',
+  },
+}));
+
+const Films = ({ open, handleOpen }) => {
   const filmsData = useSelector((state) => state.filmsData);
   const searchData = useSelector((state) => state.searchData);
+  const currentId = useSelector((state) => state.currentId);
+  const [openModal, setOpenModal] = useState(false);
+  
   const dispatch = useDispatch();
-  const {
-    films,
-    count,
-    page,
-    size,
-    totalFilteredFilms,
-  } = filmsData;
+  const classes = useStyles();
+
+  const { films, count, page, size, totalFilteredFilms } = filmsData;
+  const currentFilm = currentId ? films.find((film) => film._id === currentId) : null
 
   const handlePageChange = (e, newPage) => {
     dispatch(getFilms(newPage, size, searchData));
   };
 
+  const showFilmCard = () => {
+    setOpenModal(true)
+  }
+
   return (
     <>
       {totalFilteredFilms > 0 && (
         <>
-          <Grid container  alignItems="center">
+          <Grid container alignItems="center">
             <Grid item>
               <Pagination
                 className="my-3"
@@ -50,9 +70,8 @@ const Films = ({ setCurrentId, open, handleOpen }) => {
               <Grid item key={film._id} xs={12} sm={4} md={2}>
                 <Film
                   film={film}
-                  setCurrentId={setCurrentId}
-                  open={open}
                   handleOpen={handleOpen}
+                  showFilmCard={showFilmCard}
                 />
               </Grid>
             ))}
@@ -63,6 +82,23 @@ const Films = ({ setCurrentId, open, handleOpen }) => {
         <Typography variant="h6" align="center" color="textSecondary" paragraph>
           Aucun résultat
         </Typography>
+      )}
+
+      {openModal && currentFilm && (
+        <Modal
+          className={classes.modal}
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={openModal}>
+            <FilmCard film={currentFilm} />
+          </Fade>
+        </Modal>
       )}
     </>
   );
