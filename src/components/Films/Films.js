@@ -23,9 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Films = ({ open, handleOpen }) => {
+const Films = (props) => {
+  const { handleOpen, searchData } = props
   const filmsData = useSelector((state) => state.filmsData);
-  const searchData = useSelector((state) => state.searchData);
+  
   const currentId = useSelector((state) => state.currentId);
   const [openModal, setOpenModal] = useState(false);
   

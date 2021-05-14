@@ -15,19 +15,31 @@ const reducer = (filmsData = filmsDataInit, action) => {
 
   let index = 0;
   switch (action.type) {
+    case Actions.RESET:
+      return filmsDataInit;
     case Actions.FETCH_ALL:
       return payload;
     case Actions.CREATE:
       films.push(payload);
-      return { ...filmsData, films, totalFilms: totalFilms + 1, totalFilteredFilms: totalFilteredFilms + 1 };
+      return {
+        ...filmsData,
+        films,
+        totalFilms: totalFilms + 1,
+        totalFilteredFilms: totalFilteredFilms + 1,
+      };
     case Actions.UPDATE:
       index = films.findIndex((f) => f._id === payload.id);
       films[index] = payload.film;
-      return { ...filmsData, films,  };
+      return { ...filmsData, films };
     case Actions.DELETE:
       index = films.findIndex((f) => f._id === payload);
       films.splice(index, 1);
-      return { ...filmsData, films, totalFilms: totalFilms - 1, totalFilteredFilms: totalFilteredFilms - 1 };
+      return {
+        ...filmsData,
+        films,
+        totalFilms: totalFilms - 1,
+        totalFilteredFilms: totalFilteredFilms - 1,
+      };
     default:
       return filmsData;
   }

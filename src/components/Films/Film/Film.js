@@ -17,6 +17,7 @@ import displayArrayItems from '../../../utils/displayArrayItems';
 import defaultImage from '../../../images/default_picture.jfif';
 import { deleteFilm } from '../../../actions/films';
 import { setCurrentId, resetCurrentId } from '../../../actions/currentId';
+import { useAuth } from '../../../contexts/AuthContext';
 import ConfirmDialog from './ConfirmDialog';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
+    '&:hover': {
+      cursor: 'pointer',
+      pointerEvents: 'auto',
+    },
   },
   cardContent: {
     flexGrow: 1,
@@ -38,10 +43,6 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 0,
     '&:last-child': {
       paddingBottom: 0,
-    },
-    '&:hover': {
-      cursor: 'pointer',
-      pointerEvents: 'auto',
     },
   },
   cardActions: {
@@ -71,15 +72,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Film = (props) => {
-  const { film, handleOpen, showFilmCard } = props
+  const { film, handleOpen, showFilmCard } = props;
+  const { currentUser } = useAuth();
   const [openDialog, setOpenDialog] = useState(false);
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(setCurrentId(film._id))
-    showFilmCard()
-  }
+    dispatch(setCurrentId(film._id));
+    showFilmCard();
+  };
 
   const handleDelete = () => {
     dispatch(resetCurrentId());
@@ -88,7 +90,7 @@ const Film = (props) => {
 
   const handleUpdate = () => {
     handleOpen();
-    dispatch(setCurrentId(film._id))
+    dispatch(setCurrentId(film._id));
   };
   return (
     <>
@@ -138,22 +140,25 @@ const Film = (props) => {
               )}
             </Grid>
           </Grid>
-          <CardActions className={classes.cardActions}>
-            <Button
-              style={{ fontSize: '0.7rem', paddingBottom: 0 }}
-              color="primary"
-              onClick={handleUpdate}
-            >
-              Modifier
-            </Button>
-            <Button
-              style={{ fontSize: '0.7rem', paddingBottom: 0 }}
-              color="primary"
-              onClick={() => setOpenDialog(true)}
-            >
-              Supprimer
-            </Button>
-          </CardActions>
+
+          {currentUser.role !== 'guest' && (
+            <CardActions className={classes.cardActions}>
+              <Button
+                style={{ fontSize: '0.7rem', paddingBottom: 0 }}
+                color="primary"
+                onClick={handleUpdate}
+              >
+                Modifier
+              </Button>
+              <Button
+                style={{ fontSize: '0.7rem', paddingBottom: 0 }}
+                color="primary"
+                onClick={() => setOpenDialog(true)}
+              >
+                Supprimer
+              </Button>
+            </CardActions>
+          )}
         </CardContent>
       </Card>
       {openDialog && (

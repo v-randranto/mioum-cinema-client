@@ -57,3 +57,12 @@ export const deleteFilm = (id) => async (dispatch) => {
     console.log(error.message);
   }
 };
+
+export const resetFilms = () => async (dispatch) => {
+  try {
+    
+    dispatch({ type: Actions.RESET});
+  } catch (error) {
+    console.log(error.message);
+  }
+};

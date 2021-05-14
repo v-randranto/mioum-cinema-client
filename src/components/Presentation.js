@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -6,9 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { getFilms } from '../actions/films';
-import { setSearchData } from '../actions/search';
-import searchFormInit from '../models/searchFormInit';
-
+import { defaultSearch } from '../models/search';
+import {useAuth} from '../contexts/AuthContext'
 
 import {
   TextField,
@@ -48,14 +47,15 @@ const yearProps = {
   maxLength: 4,
 };
 
-const Presentation = ({ handleOpen, size }) => {
+const Presentation = (props) => {
+  const { handleOpen, size, searchData, setSearchData } = props;
   const filmsData = useSelector((state) => state.filmsData);
-  const searchData = useSelector((state) => state.searchData);
-  
-  const [searchForm, setSearchForm] = useState(searchData);
+  const [searchForm, setSearchForm] = useState(searchData || defaultSearch);
+  const {currentUser} = useAuth()
   const classes = useStyles();
-  const { totalFilteredFilms, totalFilms  } = filmsData;
+  const { totalFilteredFilms, totalFilms } = filmsData;
   const nbFilmsText = totalFilms ? `(${totalFilms})` : '';
+
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -64,23 +64,22 @@ const Presentation = ({ handleOpen, size }) => {
     data[name] = value;
     if (name === 'sort') {
       if (value === '') {
-        data['direction'] = ''
+        data['direction'] = '';
       } else {
-        data['direction'] = '1'
-      }      
+        data['direction'] = '1';
+      }
     }
-    setSearchForm(data);    
+    setSearchForm(data);
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();    setSearchData(searchForm);
     dispatch(getFilms(1, size, searchForm));
-    dispatch(setSearchData(searchForm));
   };
-  const handleReset = async (e) => {
+  const handleReset = (e) => {
     e.preventDefault();
-    dispatch(getFilms(1, size, searchFormInit));
-    setSearchForm(searchFormInit);
-    dispatch(setSearchData(searchFormInit));
+    setSearchData(defaultSearch);
+    setSearchForm(defaultSearch);
+    dispatch(getFilms(1, size, defaultSearch));
   };
 
   return (
@@ -178,7 +177,7 @@ const Presentation = ({ handleOpen, size }) => {
                     margin="dense"
                     label="Sens"
                   >
-                  <MenuItem value="">indif.</MenuItem>
+                    <MenuItem value="">indif.</MenuItem>
                     <MenuItem value={1}>asc</MenuItem>
                     <MenuItem value={-1}>desc</MenuItem>
                   </Select>
@@ -211,16 +210,17 @@ const Presentation = ({ handleOpen, size }) => {
                 )}
               </Grid>
             </form>
-
-            <Grid item xs={12} md={2}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => handleOpen()}
-              >
-                Ajouter un film
-              </Button>
-            </Grid>
+            {currentUser.role !== 'guest' && (
+              <Grid item xs={12} md={2}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleOpen()}
+                >
+                  Ajouter un film
+                </Button>
+              </Grid>
+            )}
           </Grid>
         </div>
       </Container>

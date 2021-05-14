@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Header from './components/layout/Header';
-import Home from './components/Home';
-import FilmCard from './components/films/film/FilmCard';
+
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
-import ScrollTop from './components/layout/ScrollTop'
+import ScrollTop from './components/layout/ScrollTop';
 import Fab from '@material-ui/core/Fab';
 import Toolbar from '@material-ui/core/Toolbar';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import './index.css'
+
+import Header from './components/layout/Header';
+import Home from './components/Home';
+import Login from './components/authentication/Login';
+
+import PrivateRoute from './PrivateRoute';
+import AuthService from './services/authService';
+import { AuthContext } from './contexts/AuthContext';
+import {toTitleCase} from './utils/textFormat'
+
+import './index.css';
 
 const theme = createMuiTheme({
   palette: {
@@ -24,29 +32,41 @@ const theme = createMuiTheme({
 });
 
 const App = (props) => {
-  
+  const {currentSession} = AuthService
+  const currentUserInit = {
+    pseudo: currentSession?.pseudo ? toTitleCase(currentSession.pseudo) : null,
+    role : currentSession?.role
+  };
+  const [currentUser, setCurrentUser] = useState(currentUserInit);
+
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <Header />
-        <Toolbar id="back-to-top-anchor" />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/home">
-            <Home />
-          </Route>
-          <Route exact path="/film-card/:id">
-            <FilmCard />
-          </Route>
-        </Switch>
+        <AuthContext.Provider
+          value={{
+            currentUser,
+            setCurrentUser,
+          }}
+        >
+          <Header />
+          <Toolbar id="back-to-top-anchor" />
+          <Switch>
+            <Route exact path="/">
+              <Login />
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
 
-        <ScrollTop {...props}>
-          <Fab color="secondary" size="small">
-            <KeyboardArrowUpIcon />
-          </Fab>
-        </ScrollTop>
+            <PrivateRoute exact path="/home" component={Home} />
+          </Switch>
+
+          <ScrollTop {...props}>
+            <Fab color="secondary" size="small">
+              <KeyboardArrowUpIcon />
+            </Fab>
+          </ScrollTop>
+        </AuthContext.Provider>
       </ThemeProvider>
     </Router>
   );
