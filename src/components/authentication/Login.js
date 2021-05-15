@@ -20,7 +20,7 @@ import getRandomInt from '../../utils/randomNumber';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
+    height: "calc(100vh - 3.4em)",
     backgroundColor: brown[100],
   },
 
@@ -29,9 +29,6 @@ const useStyles = makeStyles((theme) => ({
 
     backgroundRepeat: 'no-repeat',
     backgroundColor: brown[100],
-
-
-
     backgroundSize: 'contain',
     backgroundPosition: 'center',
   },

@@ -194,9 +194,9 @@ const Form = ({ handleCloseForm, currentId }) => {
         justify-content="space-between"
         align-items="flex-start"
         align-content="flex-start"
-        spacing={4}
+        spacing={2}
       >
-        <Grid item xs={4}>
+        <Grid item xs={2} style={{paddingRight: 0}}>
           <TextField
             id="yearInput"
             name="year"
@@ -204,21 +204,22 @@ const Form = ({ handleCloseForm, currentId }) => {
             label="Année"
             size="small"
             inputProps={yearProps}
-            value={filmData.year}
+            value={filmData.year}            
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={8} style={{paddingLeft: 0, paddingRight: 0}} >
           <TextField
             name="countries"
             variant="outlined"
-            label="Pays"
+            label="Pays (séparés par une virgule)"
             size="small"
             value={filmData.countries}
+            style={{width: "350px"}}
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2} style={{paddingLeft: 0, paddingRight: 0}}>
           <FormControlLabel
             control={
               <GreyCheckbox
