@@ -14,7 +14,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import AuthService from '../../services/authService';
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from '../../contexts/AuthContext';
+import bgPhotos from '../../data/photos.json';
+import getRandomInt from '../../utils/randomNumber';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,13 +25,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundImage: `url(${bgPhotos[getRandomInt(68)].url})`,
+
     backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.type === 'light'
-        ? theme.palette.grey[50]
-        : theme.palette.grey[500],
-    backgroundSize: 'cover',
+    backgroundColor: brown[100],
+
+
+
+    backgroundSize: 'contain',
     backgroundPosition: 'center',
   },
   paper: {
@@ -58,7 +61,7 @@ const statusInit = {
 };
 
 const Login = () => {
-  const {currentUser, setCurrentUser} = useAuth()
+  const { currentUser, setCurrentUser } = useAuth();
   const classes = useStyles();
   const [pseudo, setPseudo] = useState('');
   const [password, setPassword] = useState('');
@@ -76,7 +79,7 @@ const Login = () => {
     AuthService.login({ pseudo, password }).then(
       async (res) => {
         await setStatus((state) => ({ ...state, isSuccessful: true }));
-        await setCurrentUser({pseudo: res.pseudo, role: res.role})
+        await setCurrentUser({ pseudo: res.pseudo, role: res.role });
         history.push('/home');
       },
       (error) => {
