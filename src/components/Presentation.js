@@ -48,7 +48,7 @@ const yearProps = {
 };
 
 const Presentation = (props) => {
-  const { handleOpen, size, searchData, setSearchData } = props;
+  const { handleOpenForm, size, searchData, setSearchData} = props;
   const filmsData = useSelector((state) => state.filmsData);
   const [searchForm, setSearchForm] = useState(searchData || defaultSearch);
   const {currentUser} = useAuth()
@@ -215,7 +215,7 @@ const Presentation = (props) => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => handleOpen()}
+                  onClick={() => handleOpenForm()}
                 >
                   Ajouter un film
                 </Button>

@@ -7,7 +7,8 @@ import Alert from '@material-ui/lab/Alert';
 
 import Paper from '@material-ui/core/Paper';
 
-import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import useStyles from './styles';
 
 import AuthService from '../../services/authService';
@@ -47,16 +48,14 @@ const PasswordReset = () => {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography component="h1" variant="h5">
-          Changer le mot de passe
-        </Typography>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
 
         <TextField
           variant="outlined"
-          margin="normal"
           required
           fullWidth
-          size="small"
           name="password"
           label="Nouveau mot de passe"
           type="password"
@@ -65,10 +64,8 @@ const PasswordReset = () => {
         />
         <TextField
           variant="outlined"
-          margin="normal"
           required
           fullWidth
-          size="small"
           name="confirmPassword"
           label="Confirmation"
           type="password"
@@ -80,7 +77,7 @@ const PasswordReset = () => {
           fullWidth
           variant="contained"
           color="primary"
-          className={classes.submit}
+          margin="normal"
         >
           Envoyer
         </Button>

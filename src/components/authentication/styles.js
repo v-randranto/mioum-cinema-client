@@ -6,6 +6,10 @@ export default makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
   paper: {
     padding: theme.spacing(2),
     backgroundColor: "#FAFAFA", 

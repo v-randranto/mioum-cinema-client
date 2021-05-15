@@ -6,6 +6,7 @@ import {
   CardHeader,
   Grid,
   Typography,
+  Link,
 } from '@material-ui/core/';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
@@ -26,7 +27,7 @@ const FilmCard = ({ film }) => {
       spacing={3}
       style={{ padding: '20px 0' }}
     >
-      <Grid item xs={12} >
+      <Grid item xs={12}>
         <Card className={classes.card}>
           <CardHeader
             className={classes.cardHeader}
@@ -93,6 +94,7 @@ const FilmCard = ({ film }) => {
                 {film.summary}
               </Typography>
             )}
+
             <Grid container style={{ padding: '10px' }}>
               <Grid item xs={4}></Grid>
               <Grid item xs={2}>
@@ -115,6 +117,19 @@ const FilmCard = ({ film }) => {
                 )}
               </Grid>
             </Grid>
+            {film.links.length > 0 && (
+              <>
+                {film.links.map((link, i) => (
+                  <div key={i} className={classes.details}>
+                  <Typography paragraph>
+                    <Link href={link} target="_blank" rel="noreferrer">
+                      {link}
+                    </Link>
+                  </Typography>
+                  </div>
+                ))}
+              </>
+            )}
           </CardContent>
         </Card>
       </Grid>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -16,7 +16,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import displayArrayItems from '../../../utils/displayArrayItems';
 import defaultImage from '../../../images/default_picture.jfif';
 import { deleteFilm } from '../../../actions/films';
-import { setCurrentId, resetCurrentId } from '../../../actions/currentId';
 import { useAuth } from '../../../contexts/AuthContext';
 import ConfirmDialog from './ConfirmDialog';
 
@@ -72,25 +71,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Film = (props) => {
-  const { film, handleOpen, showFilmCard } = props;
+  const { film, handleOpenCard, handleOpenForm, setCurrentId } = props;
   const { currentUser } = useAuth();
   const [openDialog, setOpenDialog] = useState(false);
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const handleClick = () => {
-    dispatch(setCurrentId(film._id));
-    showFilmCard();
+  const handleClick = async () => {
+    await setCurrentId(film._id);
+    handleOpenCard();
   };
 
   const handleDelete = () => {
-    dispatch(resetCurrentId());
+    setCurrentId(0);
     dispatch(deleteFilm(film._id));
   };
 
-  const handleUpdate = () => {
-    handleOpen();
-    dispatch(setCurrentId(film._id));
+  const handleUpdate = async () => {
+    await setCurrentId(film._id)
+    handleOpenForm();
   };
   return (
     <>

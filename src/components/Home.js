@@ -13,7 +13,6 @@ import { brown } from '@material-ui/core/colors';
 import Presentation from './Presentation';
 import Films from './films/Films';
 import { getFilms } from '../actions/films';
-import { resetCurrentId } from '../actions/currentId';
 import { defaultSearch } from '../models/search';
 
 import Form from './form/Form';
@@ -39,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
   const filmsData = useSelector((state) => state.filmsData);
   const [searchData, setSearchData] = useState();
-  const [openFilmForm, setOpenFilmForm] = useState(false);
+  const [currentId, setCurrentId] = useState(0);
+  const [openForm, setOpenForm] = useState(false);
   
 
   const dispatch = useDispatch();
@@ -52,12 +52,12 @@ export default function Home() {
     }
   }, [dispatch, filmsData.page, searchData]);
 
-  const handleFilmForm = () => {
-    setOpenFilmForm(true);
+  const handleOpenForm = () => {
+    setOpenForm(true);
   };
-  const handleCloseFilmForm = () => {
-    dispatch(resetCurrentId());
-    setOpenFilmForm(false);
+  const handleCloseForm = () => {
+    setCurrentId(0);
+    setOpenForm(false);
   };
 
   return (
@@ -67,29 +67,29 @@ export default function Home() {
         <main>
           <Presentation
             maxWidth="xl"
-            handleOpen={handleFilmForm}
+            handleOpenForm={handleOpenForm}
             searchData={searchData}
             setSearchData={setSearchData}
           />
 
           <Paper className={classes.paper}>
             <Container maxWidth="xl">
-              <Films handleOpen={handleFilmForm} searchData={searchData} />
+              <Films handleOpenForm={handleOpenForm} searchData={searchData} currentId={currentId} setCurrentId={setCurrentId}/>
             </Container>
           </Paper>
 
           <Modal
             className={classes.modal}
-            open={openFilmForm}
-            onClose={handleCloseFilmForm}
+            open={openForm}
+            onClose={handleCloseForm}
             closeAfterTransition
             BackdropComponent={Backdrop}
             BackdropProps={{
               timeout: 500,
             }}
           >
-            <Fade in={openFilmForm}>
-              <Form handleClose={handleCloseFilmForm} />
+            <Fade in={openForm}>
+              <Form handleClose={handleCloseForm} currentId={currentId}/>
             </Fade>
           </Modal>
         </main>

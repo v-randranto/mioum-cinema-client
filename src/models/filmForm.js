@@ -6,6 +6,7 @@ const filmForm = {
     summary: '',
     genres: '',
     actors: '',
+    links: '',
     score: '',
     scoreComposer: '',
     seen: false,

@@ -1,6 +1,10 @@
 import * as Actions from '../constants/actionTypes';
 import * as api from '../api/index.js';
-import {defaultSize} from '../constants/pagination'
+
+const defaultSize = 
+process.env.NODE_ENV === 'production'
+  ? process.env.REACT_APP_PAGE_SIZE
+  : process.env.REACT_APP_PAGE_SIZE_DEV;
 
 export const getFilms = (page, size, searchData = null) => async (dispatch) => {
   const pageIndex = !page || page === 0 ? 0 : page - 1;

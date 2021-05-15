@@ -12,7 +12,7 @@ import { createFilm, updateFilm } from '../../actions/films';
 import { resetCurrentId } from '../../actions/currentId';
 
 import removeCommaEnding from '../../utils/removeCommaEnding';
-import filmFormModel from '../../models/filmForm'
+import filmFormModel from '../../models/filmForm';
 
 const GreyCheckbox = withStyles({
   root: {
@@ -29,13 +29,13 @@ const yearProps = {
   maxLength: 4,
 };
 
-const Form = ({ handleClose }) => {
+const Form = ({ handleClose, currentId }) => {
   const [filmData, setFilmData] = useState(filmFormModel);
   const [saveData, setSaveData] = useState();
   const filmsData = useSelector((state) => state.filmsData);
-  const currentId = useSelector((state) => state.currentId);
-  const {films} = filmsData
-  const film = currentId ? films.find((film) => film._id === currentId) : null
+  
+  const { films } = filmsData;
+  const film = currentId ? films.find((film) => film._id === currentId) : null;
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -65,7 +65,7 @@ const Form = ({ handleClose }) => {
         seen,
         genres: film.genres.toString(),
         directors: film.directors.toString(),
-        actors: film.actors.toString(),   
+        actors: film.actors.toString(),
         countries: film.countries.toString(),
       };
     }
@@ -117,6 +117,7 @@ const Form = ({ handleClose }) => {
       genres: [],
       directors: [],
       actors: [],
+      links: [],
     };
 
     if (filmData.directors && filmData.directors.length) {
@@ -132,15 +133,21 @@ const Form = ({ handleClose }) => {
     }
 
     if (filmData.countries && filmData.countries.length) {
-      filmSubmit.countries = removeCommaEnding(filmData.countries.trim()).split(',');
+      filmSubmit.countries = removeCommaEnding(filmData.countries.trim()).split(
+        ','
+      );
+    }
+
+    if (filmData.links && filmData.links.length) {
+      filmSubmit.links = removeCommaEnding(filmData.links.trim()).split(',');
     }
 
     if (currentId === 0) {
       dispatch(createFilm(filmSubmit));
-      // dispatch(getFilms(page));
+      // dispatch(getFilms(page, size, searchData));
       clear();
     } else {
-      dispatch(updateFilm(currentId, filmSubmit));      
+      dispatch(updateFilm(currentId, filmSubmit));
       clear();
       handleClose();
     }
@@ -203,6 +210,7 @@ const Form = ({ handleClose }) => {
               name="year"
               variant="outlined"
               label="Année"
+              size="small"
               inputProps={yearProps}
               value={filmData.year}
               onChange={handleChange}
@@ -213,6 +221,7 @@ const Form = ({ handleClose }) => {
               name="countries"
               variant="outlined"
               label="Pays"
+              size="small"
               value={filmData.countries}
               onChange={handleChange}
             />
@@ -296,6 +305,17 @@ const Form = ({ handleClose }) => {
             }
           />
         </div>
+
+        <TextField
+          name="links"
+          variant="outlined"
+          fullWidth
+          size="small"
+          label="Liens (séparés par une virgule)"
+          value={filmData.links}
+          onChange={handleChange}
+        />
+
         <Button
           className={classes.buttonSubmit}
           variant="contained"
