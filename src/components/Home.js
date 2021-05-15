@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import Dialog from '@material-ui/core/Dialog';
+import DraggableComponent from './shared/DraggableComponent';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { brown } from '@material-ui/core/colors';
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(8),
     justifyContent: 'center',
   },
-  modal: {
+  dialog: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -40,7 +41,6 @@ export default function Home() {
   const [searchData, setSearchData] = useState();
   const [currentId, setCurrentId] = useState(0);
   const [openForm, setOpenForm] = useState(false);
-  
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -55,9 +55,9 @@ export default function Home() {
   const handleOpenForm = () => {
     setOpenForm(true);
   };
-  const handleCloseForm = () => {
-    setCurrentId(0);
-    setOpenForm(false);
+  const handleCloseForm = async () => {
+    await setCurrentId(0);
+    setOpenForm(false);    
   };
 
   return (
@@ -74,24 +74,29 @@ export default function Home() {
 
           <Paper className={classes.paper}>
             <Container maxWidth="xl">
-              <Films handleOpenForm={handleOpenForm} searchData={searchData} currentId={currentId} setCurrentId={setCurrentId}/>
+              <Films
+                handleOpenForm={handleOpenForm}
+                searchData={searchData}
+                currentId={currentId}
+                setCurrentId={setCurrentId}
+              />
             </Container>
           </Paper>
 
-          <Modal
+          <Dialog
             className={classes.modal}
             open={openForm}
             onClose={handleCloseForm}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
+            PaperComponent={DraggableComponent}
           >
-            <Fade in={openForm}>
-              <Form handleClose={handleCloseForm} currentId={currentId}/>
-            </Fade>
-          </Modal>
+            <DialogTitle
+              style={{ cursor: 'move' }}
+              id="draggable-component-title"
+            />
+            <DialogContent>
+              <Form handleCloseForm={handleCloseForm} currentId={currentId} />
+            </DialogContent>
+          </Dialog>
         </main>
       ) : (
         <CircularProgress className={classes.root} />

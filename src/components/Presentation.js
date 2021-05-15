@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -184,7 +184,7 @@ const Presentation = (props) => {
                 </FormControl>
                 <Button
                   className={classes.formBtn}
-                  variant="outlined"
+                  variant="contained"
                   color="primary"
                   type="submit"
                 >
@@ -192,8 +192,8 @@ const Presentation = (props) => {
                 </Button>
                 <Button
                   className={classes.formBtn}
-                  variant="outlined"
-                  style={{ color: '#455A64' }}
+                  variant="contained"
+                  color="secondary"
                   onClick={handleReset}
                 >
                   Reset

@@ -22,11 +22,10 @@ import './index.css';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      // main: '#D13438',
       main: '#881798',
     },
     secondary: {
-      main: '#ffe082',
+      main: '#FFA726'
     },
   },
 });
