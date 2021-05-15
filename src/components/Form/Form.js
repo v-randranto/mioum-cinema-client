@@ -319,6 +319,7 @@ const Form = ({ handleCloseForm, currentId }) => {
         Envoyer
       </Button>
       <Button
+        className={classes.buttonSubmit}
         variant="contained"
         color="secondary"
         size="small"

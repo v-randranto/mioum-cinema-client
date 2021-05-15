@@ -6,10 +6,6 @@ export default makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   paper: {
     padding: theme.spacing(2),
     backgroundColor: "#FAFAFA", 
@@ -23,7 +19,7 @@ export default makeStyles((theme) => ({
     width: '97%',
     margin: '10px 0',
   },
-  buttonSubmit: {
-    marginBottom: 10,
+  button: {
+    margin: '10px 10px',
   },
 }));

@@ -7,17 +7,19 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import PasswordIcon from '@material-ui/icons/LockOutlined';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import Modal from '@material-ui/core/Modal';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import Dialog from '@material-ui/core/Dialog';
+import DraggableComponent from '../shared/DraggableComponent';
 
 import AuthService from '../../services/authService';
 import { useAuth } from '../../contexts/AuthContext';
 import { resetFilms } from '../../actions/films';
 import PasswordReset from '../authentication/PasswordReset';
+import Avatar from '@material-ui/core/Avatar';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,12 +32,13 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
   },
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+  dialog: {
     width: '20%',
     marginLeft: '33%',
+  },
+  avatar: {
+    margin: 'auto',
+    backgroundColor: theme.palette.secondary.main,
   },
 }));
 
@@ -72,12 +75,20 @@ const Header = () => {
               <Typography noWrap>Salut {currentUser.pseudo}</Typography>
               <div>
                 {currentUser.role !== 'guest' && (
-                  <Button title="Mot de passe" onClick={handleOpen} style={{padding: 0}}>
+                  <Button
+                    title="Mot de passe"
+                    onClick={handleOpen}
+                    style={{ padding: 0 }}
+                  >
                     <PasswordIcon style={{ color: 'white' }} />
                   </Button>
                 )}
 
-                <Button title="Déconnexion" onClick={logout} style={{padding: 0}}>
+                <Button
+                  title="Déconnexion"
+                  onClick={logout}
+                  style={{ padding: 0 }}
+                >
                   <LogoutIcon style={{ color: 'white' }} />
                 </Button>
               </div>
@@ -85,20 +96,26 @@ const Header = () => {
           )}
         </Toolbar>
       </AppBar>
-      <Modal
-        className={classes.modal}
+
+      <Dialog
+        className={classes.dialog}
         open={open}
         onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
+        PaperComponent={DraggableComponent}
       >
-        <Fade in={open}>
-          <PasswordReset handleClose={handleClose} />
-        </Fade>
-      </Modal>
+        <DialogTitle
+          style={{ cursor: 'move' }}
+          id="draggable-component-title"
+        >
+              <Avatar className={classes.avatar}>
+      <LockOutlinedIcon />
+    </Avatar>
+        </DialogTitle>
+        <DialogContent>
+          <PasswordReset handleCloseForm={handleClose} />
+        </DialogContent>
+      </Dialog>
+
     </>
   );
 };
