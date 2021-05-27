@@ -24,7 +24,7 @@ const axiosCall = async (params, method, data = null) => {
       console.log(error.response)
       if (error.response) {
          const { data, status } = error.response
-         throw new HttpError(data.error, status)
+         throw new HttpError(data, status)
       } else {
          throw error
       }

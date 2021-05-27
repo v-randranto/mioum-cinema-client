@@ -6,7 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import DraggableComponent from '../../shared/DraggableComponent'
 
-const ConfirmDialog = ({ onConfirm, setOpenDialog, openDialog }) => {
+const ConfirmDialog = ({ onConfirm, setOpenDialog, openDialog, filmTitle}) => {
   const confirmDelete = () => {
     setOpenDialog(false);
     onConfirm();
@@ -19,7 +19,7 @@ const ConfirmDialog = ({ onConfirm, setOpenDialog, openDialog }) => {
         onClose={() => setOpenDialog(false)}
         PaperComponent={DraggableComponent}
       >
-        <DialogTitle style={{ cursor: 'move' }} id="draggable-component-title">{"Je supprime, t'es sûr ?"}</DialogTitle>
+        <DialogTitle style={{ cursor: 'move' }} id="draggable-component-title">{`Je supprime "${filmTitle}",`} <br/>{`t'es sûr?`}</DialogTitle>
         <DialogActions>
           <Button onClick={() => setOpenDialog(false)} color="primary">
             Non

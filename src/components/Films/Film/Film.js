@@ -17,6 +17,7 @@ import displayArrayItems from '../../../utils/displayArrayItems';
 import defaultImage from '../../../images/default_picture.jfif';
 import { deleteFilm } from '../../../actions/films';
 import { useAuth } from '../../../contexts/AuthContext';
+import { shortenTitle } from '../../../utils/textFormat'
 import ConfirmDialog from './ConfirmDialog';
 
 const useStyles = makeStyles((theme) => ({
@@ -93,7 +94,7 @@ const Film = (props) => {
   };
   return (
     <>
-      <Card className={classes.card}>
+      <Card className={classes.card} elevation={2}>
         <CardMedia
           className={classes.cardMedia}
           image={film.photoUrl || defaultImage}
@@ -165,6 +166,7 @@ const Film = (props) => {
           onConfirm={handleDelete}
           setOpenDialog={setOpenDialog}
           openDialog={openDialog}
+          filmTitle={shortenTitle(film.title)}
         />
       )}
     </>

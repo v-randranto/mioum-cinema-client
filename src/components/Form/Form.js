@@ -157,10 +157,7 @@ const Form = ({ handleCloseForm, currentId }) => {
       onSubmit={handleSubmit}
     >
       <TextField
-        InputProps={{
-          className: classes.input,
-        }}
-        id="titleInput"
+        className={classes.textField}
         name="title"
         variant="outlined"
         label="Titre"
@@ -196,7 +193,7 @@ const Form = ({ handleCloseForm, currentId }) => {
         align-content="flex-start"
         spacing={2}
       >
-        <Grid item xs={2} style={{paddingRight: 0}}>
+        <Grid item xs={2} style={{ paddingRight: 0 }}>
           <TextField
             id="yearInput"
             name="year"
@@ -204,22 +201,22 @@ const Form = ({ handleCloseForm, currentId }) => {
             label="Année"
             size="small"
             inputProps={yearProps}
-            value={filmData.year}            
+            value={filmData.year}
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={8} style={{paddingLeft: 0, paddingRight: 0}} >
+        <Grid item xs={8} style={{ paddingLeft: 0, paddingRight: 0 }}>
           <TextField
             name="countries"
             variant="outlined"
             label="Pays (séparés par une virgule)"
             size="small"
             value={filmData.countries}
-            style={{width: "350px"}}
+            style={{ width: '350px' }}
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={2} style={{paddingLeft: 0, paddingRight: 0}}>
+        <Grid item xs={2} style={{ paddingLeft: 0, paddingRight: 0 }}>
           <FormControlLabel
             control={
               <GreyCheckbox

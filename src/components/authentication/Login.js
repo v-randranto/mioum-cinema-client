@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Grid from '@material-ui/core/Grid';
 import { brown } from '@material-ui/core/colors';
@@ -17,6 +18,7 @@ import AuthService from '../../services/authService';
 import { useAuth } from '../../contexts/AuthContext';
 import bgPhotos from '../../data/photos.json';
 import getRandomInt from '../../utils/randomNumber';
+import statusReducer from '../../reducers/status'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   image: {
-    backgroundImage: `url(${bgPhotos[getRandomInt(68)].url})`,
+    backgroundImage: `url(${bgPhotos[getRandomInt(92)].url})`,
 
     backgroundRepeat: 'no-repeat',
     backgroundColor: brown[100],
@@ -52,9 +54,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const statusInit = {
+  isLoading: false,
   isSuccessful: false,
   isFailed: false,
   errMessage: '',
+  infoMessage: ''
 };
 
 const Login = () => {
@@ -62,9 +66,8 @@ const Login = () => {
   const classes = useStyles();
   const [pseudo, setPseudo] = useState('');
   const [password, setPassword] = useState('');
-  const [status, setStatus] = useState(statusInit);
+  const [status, dispatch] = useReducer(statusReducer, statusInit );
 
-  // const { currentSession } = AuthService;
   const history = useHistory();
   if (currentUser?.pseudo) {
     history.replace('/home');
@@ -72,19 +75,16 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     AuthService.login({ pseudo, password }).then(
       async (res) => {
-        await setStatus((state) => ({ ...state, isSuccessful: true }));
+        await dispatch({type: 'success', message: ''})
         await setCurrentUser({ pseudo: res.pseudo, role: res.role });
         history.push('/home');
       },
       (error) => {
-        setStatus({
-          isSuccessful: false,
-          isFailed: true,
-          errMessage: 'identifiants incorrects',
-        });
+        console.log(error)
+        dispatch({type: 'failure', message: error.message})
       }
     );
   };
@@ -131,6 +131,7 @@ const Login = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={status.isLoading}
             >
               Envoyer
             </Button>
@@ -138,6 +139,9 @@ const Login = () => {
               <Alert severity="error">{status.errMessage}</Alert>
             )}
           </form>
+          {status.isLoading && (
+            <CircularProgress />
+          )}          
         </div>
       </Grid>
       <Grid item xs={false} sm={5} md={8} lg={9} className={classes.image} />

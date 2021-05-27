@@ -9,6 +9,9 @@ import Fade from '@material-ui/core/Fade';
 import Backdrop from '@material-ui/core/Backdrop';
 import { makeStyles } from '@material-ui/core/styles';
 
+import Masonry from 'react-masonry-css';
+import './Films.css'
+
 import Film from './film/Film';
 import FilmCard from './film/FilmCard';
 
@@ -20,14 +23,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     width: '30%',
-    marginLeft: '33%',
+    marginLeft: '35%',
   },
 }));
 
 const Films = (props) => {
   const { handleOpenForm, searchData, currentId, setCurrentId } = props;
   const filmsData = useSelector((state) => state.filmsData);
- 
+
   const [openCard, setOpenCard] = useState(false);
 
   const dispatch = useDispatch();
@@ -73,18 +76,22 @@ const Films = (props) => {
             </Grid>
           </Grid>
 
-          <Grid container spacing={5} alignItems="center">
+          <Masonry
+            breakpointCols={6}
+            className="my-masonry-grid"
+            columnClassName="my-masonry-grid_column"
+          >
             {films.map((film) => (
-              <Grid item key={film._id} xs={12} sm={4} md={2}>
+              <div key={film._id}>
                 <Film
                   film={film}
                   handleOpenForm={handleOpenForm}
                   handleOpenCard={handleOpenCard}
                   setCurrentId={setCurrentId}
                 />
-              </Grid>
+              </div>
             ))}
-          </Grid>
+          </Masonry>
         </>
       )}
       {!totalFilteredFilms && (
