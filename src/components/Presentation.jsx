@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { getFilms } from '../actions/films';
 import { defaultSearch } from '../models/search';
-import {useAuth} from '../contexts/AuthContext'
+import {useAuth} from '../contexts/authContext'
 
 import {
   TextField,
@@ -211,7 +211,7 @@ const Presentation = (props) => {
               </Grid>
             </form>
             {currentUser.role !== 'guest' && (
-              <Grid item xs={12} md={2}>
+              <Grid item xs={12} md={2} align="right">
                 <Button
                   variant="contained"
                   color="primary"

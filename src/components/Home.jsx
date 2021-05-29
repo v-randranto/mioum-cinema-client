@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Home() {
+const Home = () => {
   const filmsData = useSelector((state) => state.filmsData);
   const [searchData, setSearchData] = useState();
   const [currentId, setCurrentId] = useState(0);
@@ -106,3 +106,5 @@ export default function Home() {
     </>
   );
 }
+
+export default Home

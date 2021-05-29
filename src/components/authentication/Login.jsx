@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import AuthService from '../../services/authService';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/authContext';
 import bgPhotos from '../../data/photos.json';
 import getRandomInt from '../../utils/randomNumber';
 import statusReducer from '../../reducers/status'

@@ -18,7 +18,7 @@ import PasswordIcon from '@material-ui/icons/LockOutlined';
 import MuiDialogTitle from '../mui/MuiDialogTitle'
 
 import AuthService from '../../services/authService';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/authContext';
 import { resetFilms } from '../../actions/films';
 import PasswordReset from '../authentication/PasswordReset';
 import Avatar from '@material-ui/core/Avatar';

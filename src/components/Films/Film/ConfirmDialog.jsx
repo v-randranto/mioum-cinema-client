@@ -4,6 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
 
 import DraggableComponent from '../../shared/DraggableComponent'
 
@@ -20,7 +21,8 @@ const ConfirmDialog = ({ onConfirm, setOpenDialog, openDialog, filmTitle}) => {
         onClose={() => setOpenDialog(false)}
         PaperComponent={DraggableComponent}
       >
-        <DialogTitle style={{ cursor: 'move' }} id="draggable-component-title">{filmTitle}</DialogTitle>
+        <DialogTitle style={{ cursor: 'move', padding: "5px 15px" }} id="draggable-component-title">{filmTitle}</DialogTitle>
+        <Divider />
         <DialogContent>
           Je vais supprimer ce film, t'es sûr?
         </DialogContent>
