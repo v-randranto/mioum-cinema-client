@@ -16,7 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import displayArrayItems from '../../../utils/displayArrayItems';
 import defaultImage from '../../../images/default_picture.jfif';
 import { deleteFilm } from '../../../actions/films';
-import { useAuth } from '../../../contexts/authContext';
+import { useAuth } from '../../../contexts/AuthContext';
 import { shortenTitle } from '../../../utils/textFormat'
 import ConfirmDialog from './ConfirmDialog';
 

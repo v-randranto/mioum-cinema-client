@@ -14,7 +14,7 @@ import Login from './components/authentication/Login';
 
 import PrivateRoute from './PrivateRoute';
 import AuthService from './services/authService';
-import { AuthContext } from './contexts/authContext';
+import { AuthContext } from './contexts/AuthContext';
 import {toTitleCase} from './utils/textFormat'
 
 import './index.css';

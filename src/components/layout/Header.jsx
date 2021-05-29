@@ -18,16 +18,13 @@ import PasswordIcon from '@material-ui/icons/LockOutlined';
 import MuiDialogTitle from '../mui/MuiDialogTitle'
 
 import AuthService from '../../services/authService';
-import { useAuth } from '../../contexts/authContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { resetFilms } from '../../actions/films';
 import PasswordReset from '../authentication/PasswordReset';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-    // justifyContent: 'space-between',
-  // },
   appBar: {
     backgroundColor: '#34465d',
     color: 'white',

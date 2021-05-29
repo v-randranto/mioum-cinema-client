@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { getFilms } from '../actions/films';
 import { defaultSearch } from '../models/search';
-import {useAuth} from '../contexts/authContext'
+import {useAuth} from '../contexts/AuthContext'
 
 import {
   TextField,
