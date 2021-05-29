@@ -112,7 +112,7 @@ const Films = (props) => {
           }}
         >
           <Fade in={openCard}>
-            <FilmCard film={currentFilm} handleCloseCard={handleCloseCard} />
+            <FilmCard film={currentFilm} close={handleCloseCard} />
           </Fade>
         </Modal>
       )}

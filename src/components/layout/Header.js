@@ -7,7 +7,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Dialog from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,6 +14,8 @@ import DraggableComponent from '../shared/DraggableComponent';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import MovieIcon from '@material-ui/icons/Theaters';
 import PasswordIcon from '@material-ui/icons/LockOutlined';
+
+import MuiDialogTitle from '../mui/MuiDialogTitle'
 
 import AuthService from '../../services/authService';
 import { useAuth } from '../../contexts/AuthContext';
@@ -124,11 +125,11 @@ const Header = () => {
         onClose={handleClose}
         PaperComponent={DraggableComponent}
       >
-        <DialogTitle style={{ cursor: 'move' }} id="draggable-component-title">
+        <MuiDialogTitle style={{ cursor: 'move' }} id="draggable-component-title" onClose={handleClose}>
           <Avatar className={classes.avatarPwd}>
             <LockOutlinedIcon />
           </Avatar>
-        </DialogTitle>
+        </MuiDialogTitle>
         <DialogContent>
           <PasswordReset handleCloseForm={handleClose} />
         </DialogContent>

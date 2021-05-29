@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
-import DialogTitle from '@material-ui/core/DialogTitle';
+// import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Dialog from '@material-ui/core/Dialog';
 import DraggableComponent from './shared/DraggableComponent';
+import MuiDialogTitle from './mui/MuiDialogTitle'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { brown } from '@material-ui/core/colors';
@@ -89,9 +90,10 @@ export default function Home() {
             onClose={handleCloseForm}
             PaperComponent={DraggableComponent}
           >
-            <DialogTitle
+            <MuiDialogTitle
               style={{ cursor: 'move' }}
               id="draggable-component-title"
+              onClose={handleCloseForm}
             />
             <DialogContent>
               <Form handleCloseForm={handleCloseForm} currentId={currentId} />

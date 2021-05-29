@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  IconButton,
   Card,
   CardContent,
   CardMedia,
@@ -8,6 +9,7 @@ import {
   Typography,
   Link,
 } from '@material-ui/core/';
+import CloseIcon from '@material-ui/icons/Close';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import Rating from '@material-ui/lab/Rating';
@@ -16,7 +18,7 @@ import displayArrayItems from '../../../utils/displayArrayItems';
 import useStyles from './styles';
 import defaultImage from '../../../images/default_picture.jfif';
 
-const FilmCard = ({ film }) => {
+const FilmCard = ({ film, close }) => {
   const classes = useStyles();
   return (
     <Grid
@@ -33,6 +35,11 @@ const FilmCard = ({ film }) => {
             className={classes.cardHeader}
             title={film.title}
             subheader={film.originalTitle}
+            action={
+          <IconButton aria-label="close" size="small">
+            <CloseIcon onClick={close} style={{fontSize: "1rem", color: "white"}}/>
+          </IconButton>
+        }
           />
           <CardMedia
             className={classes.media}

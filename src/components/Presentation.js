@@ -86,7 +86,7 @@ const Presentation = (props) => {
     <div className={classes.heroContent}>
       <Container maxWidth="xl">
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
-          Ma petite collection de films {nbFilmsText}
+          Ta collection de films {nbFilmsText}
         </Typography>
 
         <div className={classes.heroButtons}>
