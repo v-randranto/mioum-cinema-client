@@ -1,29 +1,32 @@
 import * as Actions from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
-const defaultSize = 
-process.env.NODE_ENV === 'production'
-  ? process.env.REACT_APP_PAGE_SIZE
-  : process.env.REACT_APP_PAGE_SIZE_DEV;
+const defaultSize = process.env.REACT_APP_PAGE_SIZE;
 
-export const getFilms = (page, size, searchData = null) => async (dispatch) => {
-  const pageIndex = !page || page === 0 ? 0 : page - 1;
-  try {
-    const { data } = await api.fetchFilms(pageIndex, (size = defaultSize), searchData);
-    const payload = {
-      films: data.films,
-      count: data.totalPages,
-      page: data.currentPage,
-      size: defaultSize,
-      totalFilms: data.totalFilms,
-      totalFilteredFilms: data.totalFilteredFilms,
-    };
+export const getFilms =
+  (page, size, searchData = null) =>
+  async (dispatch) => {
+    const pageIndex = !page || page === 0 ? 0 : page - 1;
+    try {
+      const { data } = await api.fetchFilms(
+        pageIndex,
+        (size = defaultSize),
+        searchData
+      );
+      const payload = {
+        films: data.films,
+        count: data.totalPages,
+        page: data.currentPage,
+        size: defaultSize,
+        totalFilms: data.totalFilms,
+        totalFilteredFilms: data.totalFilteredFilms,
+      };
 
-    dispatch({ type: Actions.FETCH_ALL, payload });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+      dispatch({ type: Actions.FETCH_ALL, payload });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
 export const getFilm = (id) => async (dispatch) => {
   try {
@@ -64,8 +67,7 @@ export const deleteFilm = (id) => async (dispatch) => {
 
 export const resetFilms = () => async (dispatch) => {
   try {
-    
-    dispatch({ type: Actions.RESET});
+    dispatch({ type: Actions.RESET });
   } catch (error) {
     console.log(error.message);
   }

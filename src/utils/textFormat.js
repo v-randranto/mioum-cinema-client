@@ -17,7 +17,7 @@ export const toTitleCase = (value) =>{
 
 export const shortenTitle = (value) => {
   value = articleExtract(value)
-  const max = 20
+  const max = 23
   if (value.length > max) {
     value = value.substring(0, Math.min(value.length, max)) + '...'
   }
